@@ -21,14 +21,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-from PyQt5.QtCore import QUrl
+
+from PyQt5.QtCore import QUrl, QObject, pyqtSlot
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtQuick import QQuickView
+from PyQt5.QtQml import qmlRegisterType
+
+class ConsoleOutput(QObject):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    @pyqtSlot(str)
+    def out(self, obj):
+        print(obj)
 
 if __name__ == '__main__':
     import sys
 
     app = QGuiApplication(sys.argv)
+
+    qmlRegisterType(ConsoleOutput, 'PyConsole', 1, 0, 'PyConsole')
 
     view = QQuickView()
     view.setResizeMode(QQuickView.SizeRootObjectToView)
@@ -36,4 +48,5 @@ if __name__ == '__main__':
         QUrl.fromLocalFile('../view/visionai.qml')
     )
     view.show()
+
     sys.exit(app.exec_())

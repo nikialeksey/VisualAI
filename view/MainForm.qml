@@ -66,7 +66,6 @@ Rectangle {
                 );
                 incubator.onStatusChanged = function (status) {
                     if (status === Component.Ready) {
-                        console.log('Ready!');
                         var obj = incubator.object;
                         obj.color = 'green';
                         obj.opacity = 0.5;
@@ -80,6 +79,4 @@ Rectangle {
             }
         }
     }
-
-
 }

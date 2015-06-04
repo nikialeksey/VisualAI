@@ -23,8 +23,13 @@ SOFTWARE.
 */
 
 import QtQuick 2.3
+import PyConsole 1.0
 
 FormObject {
+    PyConsole {
+        id: pyconsole
+    }
+
     property bool isDrag: false
 
     property real dragMinimumX: x
@@ -36,6 +41,8 @@ FormObject {
     property real mouseX: mouseArea.mouseX
     property real mouseY: mouseArea.mouseY
 
+    Drag.active: mouseArea.drag.active
+
     signal dragBegin
     signal dragEnd
     signal clicked
@@ -43,12 +50,17 @@ FormObject {
     signal released
 
     function catchMouse() {
-        mouseArea.drag.start();
+        mouseArea.enabled = true;
     }
 
     function stopDragImmediately() {
-        console.log('okok');
+        pyconsole.out('ok');
+        mouseArea.enabled = false;
+        Drag.active = false;
+        mouseArea.drag.active = false;
+        Drag.cancel();
         mouseArea.drag.cancel();
+
     }
 
     onChildrenChanged: {
@@ -106,6 +118,5 @@ FormObject {
             parent.released();
         }
     }
-
 }
 

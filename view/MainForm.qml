@@ -34,21 +34,22 @@ Rectangle {
         x: 0; y: 0
         //z: 1
         Rectangle {
-            id: toolsWindow
-            border.color: 'red'
+            id: toolsResource
             width: 100
             height: wrapper.height
+            border.color: 'red'
             z: 2
 
             DecoratorObject {
-
+                x: 10; y: 10
+                canvasDX: 100
             }
         }
 
         Rectangle {
             id: canvas
             border.color: 'red'
-            width: wrapper.width - toolsWindow.width
+            width: wrapper.width - toolsResource.width
             height: wrapper.height
             z: 1
 
@@ -58,7 +59,7 @@ Rectangle {
             }
 
             Behavior on color {
-                ColorAnimation { duration: 100 }
+                ColorAnimation { duration: 500; easing.type: Easing.OutBack }
             }
 
             states: [

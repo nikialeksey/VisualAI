@@ -51,22 +51,6 @@ FormObject {
     signal pressed
     signal released
 
-    function catchMouse() {
-        mouseArea.enabled = true;
-    }
-
-    function stopDragImmediately() {
-        pyconsole.out('ok');
-        pyconsole.out(Drag.active);
-        pyconsole.out(mouseArea.drag.active);
-        mouseArea.enabled = false;
-        Drag.active = false;
-        mouseArea.drag.active = false;
-        Drag.cancel();
-        mouseArea.drag.cancel();
-
-    }
-
     onChildrenChanged: {
         if (children.length === 2) {
             // Для того, чтобы все дочерние элементы, кроме тех,
@@ -81,10 +65,6 @@ FormObject {
             mouseArea.children = childrens;
             children = [children[0], ];
         }
-    }
-
-    onPositionChanged: {
-
     }
 
     MouseArea {

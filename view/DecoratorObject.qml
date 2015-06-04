@@ -25,43 +25,11 @@ SOFTWARE.
 import PyConsole 1.0
 import QtQuick 2.4
 
-DnDObject {
+ToolObject {
     PyConsole {
         id: pyconsole
     }
 
-    id: decorator
-    x: 10; y: 10
-    width: 50
-    height: 50
-    color: "#a7ec75"
-    dragMinimumX: 0
-    dragMaximumX: 1000
-    dragMinimumY: 0
-    dragMaximumY: 1000
-    z: 3
-    border.width: 5
-    border.color: 'black'
-    property bool isPrototype: true
-
-    onDragBegin: {
-        if (isPrototype) {
-            var component = Qt.createComponent('DecoratorObject.qml');
-
-            var posX = mouseX;
-            var posY = mouseY;
-
-            var incubator = component.incubateObject(
-                    decorator.parent
-            );
-            incubator.onStatusChanged = function (status) {
-                if (status === Component.Ready) {
-                    pyconsole.out('ok');
-                    var obj = incubator.object;
-                    decorator.isPrototype = false;
-                    decorator.z = 4;
-                }
-            }
-        }
+    onDragEnd: {
     }
 }

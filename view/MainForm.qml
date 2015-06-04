@@ -25,58 +25,51 @@ SOFTWARE.
 import QtQuick 2.4
 
 Rectangle {
-    width: 360
-    height: 360
+    id: wrapper
+    width: 560
+    height: 560
+    z: 0
 
-    Rectangle {
+    Row {
         x: 0; y: 0
-        border.color: 'black'
-        width: 100
-        height: parent.height
+        //z: 1
+        Rectangle {
+            id: toolsWindow
+            border.color: 'red'
+            width: 100
+            height: wrapper.height
+            z: 2
 
-        DnDObject {
-            x: 10; y: 10
-            width: 50
-            height: 50
-            color: "#a7ec75"
-            dragMinimumX: 0
-            dragMaximumX: 100
-            dragMinimumY: 0
-            dragMaximumY: 100
+            DecoratorObject {
 
-            onDragBegin: {
-                var component = Qt.createComponent('DnDObject.qml');
+            }
+        }
 
-                var posX = mouseX;
-                var posY = mouseY;
+        Rectangle {
+            id: canvas
+            border.color: 'red'
+            width: wrapper.width - toolsWindow.width
+            height: wrapper.height
+            z: 1
 
-                var incubator = component.incubateObject(
-                        parent.parent.parent,
-                        {
-                                x: posX,
-                                y: posY,
-                                color: 'red',
-                                width: 30,
-                                height: 30,
-                                dragMinimumX: 0,
-                                dragMaximumX: 100,
-                                dragMinimumY: 0,
-                                dragMaximumY: 100,
-                        }
-                );
-                incubator.onStatusChanged = function (status) {
-                    if (status === Component.Ready) {
-                        var obj = incubator.object;
-                        obj.color = 'green';
-                        obj.opacity = 0.5;
+            DropArea {
+                id: canvasDrop
+                anchors.fill: parent
+            }
 
-                        stopDragImmediately();
+            Behavior on color {
+                ColorAnimation { duration: 100 }
+            }
 
-                        obj.catchMouse();
-
+            states: [
+                State {
+                    when: canvasDrop.containsDrag
+                    PropertyChanges {
+                        target: canvas
+                        color: "grey"
                     }
                 }
-            }
+            ]
         }
     }
 }

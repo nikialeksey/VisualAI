@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import QtQuick 2.3
+import QtQuick 2.4
 import PyConsole 1.0
 
 FormObject {
@@ -42,6 +42,8 @@ FormObject {
     property real mouseY: mouseArea.mouseY
 
     Drag.active: mouseArea.drag.active
+    Drag.hotSpot.x: width/2
+    Drag.hotSpot.y: height/2
 
     signal dragBegin
     signal dragEnd
@@ -55,6 +57,8 @@ FormObject {
 
     function stopDragImmediately() {
         pyconsole.out('ok');
+        pyconsole.out(Drag.active);
+        pyconsole.out(mouseArea.drag.active);
         mouseArea.enabled = false;
         Drag.active = false;
         mouseArea.drag.active = false;

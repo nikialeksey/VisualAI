@@ -112,7 +112,7 @@ Rectangle {
             }
 
             Behavior on color {
-                ColorAnimationForBehavior {}
+                NormalColorAnimation {}
             }
 
             states: [

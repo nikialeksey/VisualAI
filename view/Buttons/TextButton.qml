@@ -48,7 +48,7 @@ AbstractButton {
     }
 
     Behavior on color {
-        ColorAnimationForBehavior {}
+        NormalColorAnimation {}
     }
 
     states: [

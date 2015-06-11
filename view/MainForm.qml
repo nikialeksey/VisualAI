@@ -25,6 +25,12 @@ SOFTWARE.
 import QtQuick 2.4
 
 Rectangle {
+    property string toolsPanelColor: '#00A383'
+    property string controlsPanelColor: '#34D1B2'
+    property string canvasPanelColor: '#5ED1BA'
+    property string canvasPanelDropColor: '#1F7A68'
+    property real toolsWidth: 200
+
     id: wrapper
     width: 560
     height: 560
@@ -33,26 +39,37 @@ Rectangle {
     Row {
         x: 0; y: 0
         //z: 1
-        Rectangle {
-            id: toolsResource
-            width: 100
-            height: wrapper.height
-            border.color: 'red'
-            z: 2
 
-            DecoratorObject {
-                x: 10; y: 10
-                canvasDX: 100
+        Column {
+            Rectangle {
+                id: toolsPanel
+                width: toolsWidth
+                height: wrapper.height - controlsPanel.height
+                color: toolsPanelColor
+                z: 2
+
+                DecoratorObject {
+                    x: 10; y: 10
+                    canvasDX: toolsWidth
+                }
+            }
+
+            Rectangle {
+                id: controlsPanel
+                color: controlsPanelColor
+                width: toolsWidth
+                height: 200
+                z: 2
             }
         }
 
 
         Rectangle {
             id: canvas
-            border.color: 'red'
-            width: wrapper.width - toolsResource.width
+            color: canvasPanelColor
+            width: wrapper.width - toolsWidth
             height: wrapper.height
-            z: 1
+            z: -10
 
             Canvas {
 
@@ -88,7 +105,7 @@ Rectangle {
                     when: canvasDrop.containsDrag
                     PropertyChanges {
                         target: canvas
-                        color: "grey"
+                        color: canvasPanelDropColor
                     }
                 }
             ]

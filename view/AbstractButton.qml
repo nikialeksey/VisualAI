@@ -25,6 +25,9 @@ SOFTWARE.
 import QtQuick 2.4
 
 FormObject {
+    property bool isHover: false
+    property bool isPressed: mouseArea.pressed
+
     signal clicked
     signal pressed
     signal released
@@ -51,12 +54,25 @@ FormObject {
         }
 
         onEntered: {
+            parent.isHover = true;
             parent.entered();
         }
 
         onExited: {
+            parent.isHover = false;
             parent.exited();
         }
     }
+
+    states: [
+        State {
+            name: 'hover'
+            when: isHover
+        },
+        State {
+            name: pressed
+            when isPressed
+        }
+    ]
 }
 

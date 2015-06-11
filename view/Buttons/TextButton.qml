@@ -24,6 +24,7 @@ SOFTWARE.
 
 import QtQuick 2.4
 import PyConsole 1.0
+import "../Animations"
 
 AbstractButton {
     id: textButton

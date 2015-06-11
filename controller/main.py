@@ -43,6 +43,9 @@ if __name__ == '__main__':
     qmlRegisterType(ConsoleOutput, 'PyConsole', 1, 0, 'PyConsole')
 
     view = QQuickView()
+    context = view.rootContext()
+
+    view.engine().quit.connect(app.quit)
     view.setResizeMode(QQuickView.SizeRootObjectToView)
     view.setSource(
         QUrl.fromLocalFile('../view/visionai.qml')

@@ -24,6 +24,8 @@ SOFTWARE.
 
 import QtQuick 2.4
 import PyConsole 1.0
+import "Buttons"
+import "Animations"
 
 Rectangle {
     PyConsole {
@@ -66,7 +68,7 @@ Rectangle {
                 height: 200
                 z: 2
 
-                MyTextButton {
+                NormalTextButton {
                     text: "Generate"
 
                     width: toolsWidth

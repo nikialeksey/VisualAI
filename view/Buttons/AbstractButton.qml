@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 import QtQuick 2.4
+import "../Base"
 
 FormObject {
     property bool isHovered: false

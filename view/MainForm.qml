@@ -68,12 +68,22 @@ Rectangle {
                 height: 200
                 z: 2
 
-                NormalTextButton {
-                    text: "Generate"
+                Column {
+                    spacing: 10
+                    NormalTextButton {
+                        text: "Generate"
+                        width: toolsWidth
+                    }
 
-                    width: toolsWidth
-                    //height: 100
+                    NormalTextButton {
+                        text: "Export JSON"
+                        width: toolsWidth
+                    }
 
+                    NormalTextButton {
+                        text: "Import JSON"
+                        width: toolsWidth
+                    }
                 }
             }
         }

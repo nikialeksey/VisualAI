@@ -61,10 +61,10 @@ Rectangle {
                 height: 200
                 z: 2
 
-                TextButton {
+                /*TextButton {
                     text: "Generate"
 
-                }
+                }*/
             }
         }
 
@@ -102,7 +102,7 @@ Rectangle {
             }
 
             Behavior on color {
-                ColorAnimation { duration: 500; easing.type: Easing.OutBack }
+                ColorAnimationForBehavior {}
             }
 
             states: [

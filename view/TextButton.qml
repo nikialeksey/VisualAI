@@ -36,6 +36,11 @@ AbstractButton {
         text: parent.text
     }
 
+    Behavior on color {
+        ColorAnimation {
+
+        }
+    }
 
     transitions: [
         Transition {

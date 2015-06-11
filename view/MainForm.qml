@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import QtQuick 2.4
+import QtQuick 2.3
 
 Rectangle {
     id: wrapper
@@ -46,12 +46,33 @@ Rectangle {
             }
         }
 
+
         Rectangle {
             id: canvas
             border.color: 'red'
             width: wrapper.width - toolsResource.width
             height: wrapper.height
             z: 1
+
+            Canvas {
+
+                id: cnv
+                anchors.fill: parent
+                onPaint: {
+                    var ctx = cnv.getContext('2d');
+                    ctx.strokeStyle = 'rgb(255, 100, 55, 1.0)';
+                    ctx.beginPath();
+                    ctx.moveTo(75,40);
+                    ctx.bezierCurveTo(75,37,70,25,50,25);
+                    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
+                    ctx.bezierCurveTo(20,80,40,102,75,120);
+                    ctx.bezierCurveTo(110,102,130,80,130,62.5);
+                    ctx.bezierCurveTo(130,62.5,130,25,100,25);
+                    ctx.bezierCurveTo(85,25,75,37,75,40);
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+            }
 
             DropArea {
                 id: canvasDrop

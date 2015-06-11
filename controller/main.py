@@ -29,7 +29,7 @@ from PyQt5.QtQml import qmlRegisterType
 
 class ConsoleOutput(QObject):
     def __init__(self, parent=None):
-        super().__init__(parent)
+        super(ConsoleOutput, self).__init__(parent)
 
     @pyqtSlot(str)
     def out(self, obj):

@@ -26,10 +26,33 @@ import QtQuick 2.4
 import PyConsole 1.0
 
 AbstractButton {
+    id: textButton
+    property string colorNormal
+    property string colorPressed
+    property string colorHovered
     property string text
 
     Text {
         text: parent.text
     }
 
+
+    transitions: [
+        Transition {
+            from: '*'; to: 'hovered'
+            PropertyChanges {target: textButton; color: colorHovered}
+        },
+        Transition {
+            from: 'hovered'; to: 'pressed'
+            PropertyChanges {target: textButton; color: colorPressed}
+        },
+        Transition {
+            from: 'hovered'; to: '*'
+            PropertyChanges {target: textButton; color: colorNormal}
+        },
+        Transition {
+            from: 'pressed'; to: '*'
+            PropertyChanges {target: textButton; color: colorNormal}
+        }
+    ]
 }

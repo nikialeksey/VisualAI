@@ -66,11 +66,11 @@ FormObject {
 
     states: [
         State {
-            name: 'hover'
+            name: 'hovered'
             when: isHover
         },
         State {
-            name: pressed
+            name: 'pressed'
             when isPressed
         }
     ]

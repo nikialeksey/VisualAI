@@ -23,45 +23,10 @@ SOFTWARE.
 */
 
 import QtQuick 2.4
+import PyConsole 1.0
 
-FormObject {
-    property bool isHovered: false
-    property bool isPressed: mouseArea.pressed
-
-    signal clicked
-    signal pressed
-    signal released
-    signal entered
-    signal exited
-
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-
-        hoverEnabled: true
-
-        onClicked: {
-            parent.clicked();
-        }
-
-        onPressed: {
-            parent.pressed();
-        }
-
-        onReleased: {
-            parent.released();
-        }
-
-        onEntered: {
-            parent.isHovered = true;
-            parent.entered();
-        }
-
-        onExited: {
-            parent.isHovered = false;
-            parent.exited();
-        }
-    }
+TextButton {
+    colorNormal: '#A468D5'
+    colorHovered: '#9240D5'
+    colorPressed: '#582781'
 }
-

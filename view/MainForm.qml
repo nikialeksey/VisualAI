@@ -23,8 +23,13 @@ SOFTWARE.
 */
 
 import QtQuick 2.4
+import PyConsole 1.0
 
 Rectangle {
+    PyConsole {
+        id: pyconsole
+    }
+
     property string toolsPanelColor: '#00A383'
     property string controlsPanelColor: '#34D1B2'
     property string canvasPanelColor: '#5ED1BA'
@@ -61,10 +66,13 @@ Rectangle {
                 height: 200
                 z: 2
 
-                /*TextButton {
+                MyTextButton {
                     text: "Generate"
 
-                }*/
+                    width: toolsWidth
+                    //height: 100
+
+                }
             }
         }
 

@@ -32,30 +32,38 @@ AbstractButton {
     property string colorHovered
     property string text
 
+    color: colorNormal
+
+    width: textInstance.width
+    height: textInstance.height
+
     Text {
+        id: textInstance
         text: parent.text
+        font.family: "Helvetica"
+        font.pointSize: 24
+
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Behavior on color {
         ColorAnimationForBehavior {}
     }
 
-    transitions: [
-        Transition {
-            from: '*'; to: 'hovered'
-            PropertyChanges {target: textButton; color: colorHovered}
+    states: [
+        State {
+            name: ''
+            PropertyChanges {target: textButton; color: colorNormal}
         },
-        Transition {
-            from: 'hovered'; to: 'pressed'
+        State {
+            name: 'pressed'
+            when: isPressed
             PropertyChanges {target: textButton; color: colorPressed}
         },
-        Transition {
-            from: 'hovered'; to: '*'
-            PropertyChanges {target: textButton; color: colorNormal}
-        },
-        Transition {
-            from: 'pressed'; to: '*'
-            PropertyChanges {target: textButton; color: colorNormal}
+        State {
+            name: 'hovered'
+            when: isHovered
+            PropertyChanges {target: textButton; color: colorHovered}
         }
     ]
 }

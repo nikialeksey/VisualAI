@@ -41,7 +41,6 @@ AbstractButton {
     Text {
         id: textInstance
         text: parent.text
-        font.family: "Helvetica"
         font.pointSize: 24
 
         anchors.horizontalCenter: parent.horizontalCenter

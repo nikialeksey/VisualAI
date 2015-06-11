@@ -26,6 +26,7 @@ import QtQuick 2.4
 import PyConsole 1.0
 import "Buttons"
 import "Animations"
+import "Tools"
 
 Rectangle {
     PyConsole {

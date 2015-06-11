@@ -60,6 +60,11 @@ Rectangle {
                 width: toolsWidth
                 height: 200
                 z: 2
+
+                TextButton {
+                    text: "Generate"
+
+                }
             }
         }
 

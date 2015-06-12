@@ -26,6 +26,15 @@ import QtQuick 2.4
 import PyConsole 1.0
 
 ActionObject {
+
+    PyConsole {
+        id: pyconsole
+    }
+
+    function createPrototypeComponent() {
+        return Qt.createComponent('UserAction.qml');
+    }
+
     Image {
         anchors.fill: parent
         source: "Icons/UserAction.svg"

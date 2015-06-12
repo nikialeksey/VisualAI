@@ -35,10 +35,10 @@ DnDObject {
 
     z: 3
 
-    width: 50
-    height: 50
+    width: 40
+    height: 40
 
-    color: "#3F046F"
+    color: "#A468D5"
     dragMinimumX: -10000
     dragMaximumX: 10000
     dragMinimumY: -10000
@@ -48,9 +48,13 @@ DnDObject {
     property real canvasDX: 0
     property real canvasDY: 0
 
+    function createPrototypeComponent() {
+        return Qt.createComponent('ToolObject.qml');
+    }
+
     onDragBegin: {
         if (isPrototype) {
-            var component = Qt.createComponent('ToolObject.qml');
+            var component = createPrototypeComponent();
 
             var posX = mouseX;
             var posY = mouseY;

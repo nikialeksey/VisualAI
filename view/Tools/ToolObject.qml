@@ -71,7 +71,6 @@ DnDObject {
             );
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
-                    pyconsole.out('ok');
                     var obj = incubator.object;
                     decorator.isPrototype = false;
                     decorator.z = 4;
@@ -81,11 +80,11 @@ DnDObject {
     }
 
     onDragEnd: {
-       /* if (parent != Drag.target) {
-            parent = Drag.target == null? null: Drag.target
+        if (Drag.target != null && parent != Drag.target) {
+            parent = Drag.target;
 
             x = x - canvasDX;
             y = y - canvasDY;
-        }*/
+        }
     }
 }

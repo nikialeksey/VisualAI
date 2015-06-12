@@ -48,7 +48,6 @@ Rectangle {
 
     Row {
         x: 0; y: 0
-        //z: 1
 
         Column {
             Rectangle {
@@ -64,7 +63,7 @@ Rectangle {
                     ToolsContainer {
                         id: compositesToolsContainer
                         title: 'Composites'
-                        height: 100
+                        height: 150
                         width: toolsWidth - parent.spacing * 2
 
                         Sequence {

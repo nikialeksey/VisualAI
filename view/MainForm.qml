@@ -76,6 +76,10 @@ Rectangle {
                         UserAction {
                             x: 10; y: 25
                         }
+
+                        Wait {
+                            x: 60; y: 25
+                        }
                     }
 
                     ToolsContainer {

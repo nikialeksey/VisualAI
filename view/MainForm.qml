@@ -27,6 +27,7 @@ import PyConsole 1.0
 import "Buttons"
 import "Animations"
 import "Tools"
+import "Tools/Actions"
 
 Rectangle {
     PyConsole {
@@ -71,6 +72,10 @@ Rectangle {
                         title: 'Actions'
                         height: 100
                         width: toolsWidth - parent.spacing * 2
+
+                        UserAction {
+                            x: 10; y: 25
+                        }
                     }
 
                     ToolsContainer {

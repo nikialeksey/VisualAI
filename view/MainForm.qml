@@ -57,6 +57,8 @@ Rectangle {
                 color: toolsPanelColor
                 z: 2
 
+                property real distanceToCanvasX: toolsWidth - 10
+
                 Column {
                     spacing: 10
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -66,24 +68,30 @@ Rectangle {
                         height: 150
                         width: toolsWidth - parent.spacing * 2
 
+
                         Sequence {
                             x: 10; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
                         }
 
                         Selector {
                             x: 60; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
                         }
 
                         Parallel {
                             x: 10; y: 75
+                            canvasDX: toolsPanel.distanceToCanvasX
                         }
 
                         MemSelector {
                             x: 60; y: 75
+                            canvasDX: toolsPanel.distanceToCanvasX
                         }
 
                         MemSequence {
                             x: 110; y: 75
+                            canvasDX: toolsPanel.distanceToCanvasX
                         }
                     }
 
@@ -92,29 +100,37 @@ Rectangle {
                         title: 'Actions'
                         height: 100
                         width: toolsWidth - parent.spacing * 2
+                        property int realPositionY: compositesToolsContainer.height + parent.spacing
 
                         UserAction {
                             x: 10; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -actionsToolsContainer.realPositionY
+
+                            onPositionChanged: {
+                                pyconsole.out(canvasDY)
+                            }
                         }
 
                         Wait {
                             x: 60; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -actionsToolsContainer.realPositionY
                         }
                     }
 
                     ToolsContainer {
                         id: decoratorsToolsContainer
                         title: 'Decorators'
+                        height: 100
                         width: toolsWidth - parent.spacing * 2
 
-                        height: 100
                         DecoratorObject {
                             x: 10; y: 25
-                            canvasDX: toolsWidth
-
-                            onClicked: {
-                            }
+                            //canvasDX: toolsWidth - 10
                         }
+
+
                     }
                 }
             }

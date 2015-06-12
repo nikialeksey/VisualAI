@@ -66,7 +66,6 @@ DnDObject {
                         canvasDX: decorator.canvasDX,
                         canvasDY: decorator.canvasDY,
                         color: decorator.color,
-                        border: decorator.border,
                     }
             );
             incubator.onStatusChanged = function (status) {
@@ -80,8 +79,9 @@ DnDObject {
     }
 
     onDragEnd: {
-        if (Drag.target != null && parent != Drag.target) {
+        if (parent != Drag.target) {
             parent = Drag.target;
+            pyconsole.out(parent);
 
             x = x - canvasDX;
             y = y - canvasDY;

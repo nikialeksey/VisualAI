@@ -30,6 +30,4 @@ ToolObject {
         id: pyconsole
     }
 
-    onDragEnd: {
-    }
 }

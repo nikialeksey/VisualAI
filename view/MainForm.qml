@@ -70,6 +70,10 @@ Rectangle {
                         Sequence {
                             x: 10; y: 25
                         }
+
+                        Selector {
+                            x: 60; y: 25
+                        }
                     }
 
                     ToolsContainer {

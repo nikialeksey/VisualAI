@@ -74,6 +74,10 @@ Rectangle {
                         Selector {
                             x: 60; y: 25
                         }
+
+                        Parallel {
+                            x: 10; y: 75
+                        }
                     }
 
                     ToolsContainer {

@@ -78,6 +78,10 @@ Rectangle {
                         Parallel {
                             x: 10; y: 75
                         }
+
+                        MemSelector {
+                            x: 60; y: 75
+                        }
                     }
 
                     ToolsContainer {

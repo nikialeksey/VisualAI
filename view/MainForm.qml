@@ -28,6 +28,7 @@ import "Buttons"
 import "Animations"
 import "Tools"
 import "Tools/Actions"
+import "Tools/Composites"
 
 Rectangle {
     PyConsole {
@@ -65,6 +66,10 @@ Rectangle {
                         title: 'Composites'
                         height: 100
                         width: toolsWidth - parent.spacing * 2
+
+                        Sequence {
+                            x: 10; y: 25
+                        }
                     }
 
                     ToolsContainer {

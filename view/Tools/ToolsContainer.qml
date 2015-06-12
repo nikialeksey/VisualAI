@@ -24,46 +24,15 @@ SOFTWARE.
 
 import QtQuick 2.4
 import PyConsole 1.0
-import "../Animations"
+import "../Base"
 
-AbstractButton {
-    id: textButton
-    property string colorNormal
-    property string colorPressed
-    property string colorHovered
-    property string text
-
-    color: colorNormal
-
-    width: textInstance.width
-    height: textInstance.height
+FormObject {
+    property string title: "Title"
+    color: '#BFBA30'
 
     Text {
-        id: textInstance
-        text: parent.text
-        font.pointSize: 24
-
-        anchors.centerIn: parent
+        id: titleText
+        text: title
+        font.pointSize: 14
     }
-
-    Behavior on color {
-        NormalColorAnimation {}
-    }
-
-    states: [
-        State {
-            name: ''
-            PropertyChanges {target: textButton; color: colorNormal}
-        },
-        State {
-            name: 'pressed'
-            when: isPressed
-            PropertyChanges {target: textButton; color: colorPressed}
-        },
-        State {
-            name: 'hovered'
-            when: isHovered
-            PropertyChanges {target: textButton; color: colorHovered}
-        }
-    ]
 }

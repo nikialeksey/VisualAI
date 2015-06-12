@@ -38,14 +38,11 @@ DnDObject {
     width: 50
     height: 50
 
-    color: "#a7ec75"
+    color: "#3F046F"
     dragMinimumX: -10000
     dragMaximumX: 10000
     dragMinimumY: -10000
     dragMaximumY: 10000
-
-    border.width: 5
-    border.color: 'black'
 
     property bool isPrototype: true
     property real canvasDX: 0
@@ -79,20 +76,12 @@ DnDObject {
         }
     }
 
-    onPositionChanged: {
-        /*if (Drag.target !== null) {
-            parent = Drag.target;
-            x = mouseX;
-            y = mouseY;
-        }*/
-    }
-
     onDragEnd: {
-        if (parent != Drag.target) {
+       /* if (parent != Drag.target) {
             parent = Drag.target == null? null: Drag.target
 
             x = x - canvasDX;
             y = y - canvasDY;
-        }
+        }*/
     }
 }

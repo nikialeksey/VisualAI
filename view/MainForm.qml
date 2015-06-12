@@ -40,8 +40,8 @@ Rectangle {
     property real toolsWidth: 200
 
     id: wrapper
-    width: 560
-    height: 560
+    width: 1024
+    height: 600
     z: 0
 
     Row {
@@ -56,9 +56,37 @@ Rectangle {
                 color: toolsPanelColor
                 z: 2
 
-                DecoratorObject {
-                    x: 10; y: 10
-                    canvasDX: toolsWidth
+                Column {
+                    spacing: 10
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    ToolsContainer {
+                        id: compositesToolsContainer
+                        title: 'Composites'
+                        height: 100
+                        width: toolsWidth - parent.spacing * 2
+                    }
+
+                    ToolsContainer {
+                        id: actionsToolsContainer
+                        title: 'Actions'
+                        height: 100
+                        width: toolsWidth - parent.spacing * 2
+                    }
+
+                    ToolsContainer {
+                        id: decoratorsToolsContainer
+                        title: 'Decorators'
+                        width: toolsWidth - parent.spacing * 2
+
+                        height: 100
+                        DecoratorObject {
+                            x: 10; y: 25
+                            canvasDX: toolsWidth
+
+                            onClicked: {
+                            }
+                        }
+                    }
                 }
             }
 
@@ -66,24 +94,25 @@ Rectangle {
                 id: controlsPanel
                 color: controlsPanelColor
                 width: toolsWidth
-                height: 200
+                height: 150
                 z: 2
 
                 Column {
                     spacing: 10
+                    anchors.centerIn: parent
                     NormalTextButton {
                         text: "Generate"
-                        width: toolsWidth
+                        width: toolsWidth - 10
                     }
 
                     NormalTextButton {
                         text: "Export JSON"
-                        width: toolsWidth
+                        width: toolsWidth - 10
                     }
 
                     NormalTextButton {
                         text: "Import JSON"
-                        width: toolsWidth
+                        width: toolsWidth - 10
                     }
                 }
             }

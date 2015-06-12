@@ -82,6 +82,10 @@ Rectangle {
                         MemSelector {
                             x: 60; y: 75
                         }
+
+                        MemSequence {
+                            x: 110; y: 75
+                        }
                     }
 
                     ToolsContainer {

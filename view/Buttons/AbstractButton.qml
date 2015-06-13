@@ -29,6 +29,9 @@ FormObject {
     property bool isHovered: false
     property bool isPressed: mouseArea.pressed
 
+    property real mouseX: mouseArea.mouseX
+    property real mouseY: mouseArea.mouseY
+
     signal clicked
     signal pressed
     signal released

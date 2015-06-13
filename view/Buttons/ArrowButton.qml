@@ -27,6 +27,10 @@ import PyConsole 1.0
 import "../Animations"
 
 AbstractButton {
+    PyConsole {
+        id: pyconsole
+    }
+
     id: arrowButton
     property string normalColor
     property string pressedColor

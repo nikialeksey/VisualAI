@@ -25,4 +25,4 @@ SOFTWARE.
 import QtQuick 2.4
 import PyConsole 1.0
 
-NumberAnimation { duration: 500; easing.type: Easing.OutQuint }
+NumberAnimation { duration: 200; easing.type: Easing.OutQuint }

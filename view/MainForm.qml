@@ -128,6 +128,8 @@ Rectangle {
                         DecoratorObject {
                             x: 10; y: 25
                             //canvasDX: toolsWidth - 10
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -actionsToolsContainer.realPositionY
                         }
 
 

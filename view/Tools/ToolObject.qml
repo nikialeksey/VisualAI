@@ -25,13 +25,14 @@ SOFTWARE.
 import QtQuick 2.4
 import PyConsole 1.0
 import "../Base"
+import "../Buttons"
 
 DnDObject {
     PyConsole {
         id: pyconsole
     }
 
-    id: decorator
+    id: toolObject
 
     z: 3
 
@@ -47,6 +48,7 @@ DnDObject {
     property bool isPrototype: true
     property real canvasDX: 0
     property real canvasDY: 0
+    property string arrowPointColor: '#A69F00'
 
     function createPrototypeComponent() {
         return Qt.createComponent('ToolObject.qml');
@@ -60,19 +62,19 @@ DnDObject {
             var posY = mouseY;
 
             var incubator = component.incubateObject(
-                    decorator.parent, {
-                        x: decorator.x,
-                        y: decorator.y,
-                        canvasDX: decorator.canvasDX,
-                        canvasDY: decorator.canvasDY,
-                        color: decorator.color,
+                    toolObject.parent, {
+                        x: toolObject.x,
+                        y: toolObject.y,
+                        canvasDX: toolObject.canvasDX,
+                        canvasDY: toolObject.canvasDY,
+                        color: toolObject.color,
                     }
             );
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
                     var obj = incubator.object;
-                    decorator.isPrototype = false;
-                    decorator.z = 4;
+                    toolObject.isPrototype = false;
+                    toolObject.z = 4;
                 }
             }
         }
@@ -81,10 +83,25 @@ DnDObject {
     onDragEnd: {
         if (parent != Drag.target) {
             parent = Drag.target;
-            pyconsole.out(parent);
 
             x = x - canvasDX;
             y = y - canvasDY;
         }
+    }
+
+    NormalArrowButton {
+        id: leftPoint
+        width: 10
+        height: 10
+        x: -10
+        y: toolObject.height / 2 - height / 2
+    }
+
+    NormalArrowButton {
+        id: rightPoint
+        width: 10
+        height: 10
+        x: toolObject.width
+        y: toolObject.height / 2 - height / 2
     }
 }

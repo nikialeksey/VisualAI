@@ -52,7 +52,7 @@ FormObject {
     signal released
 
     onChildrenChanged: {
-        if (children.length === 2) {
+        /*if (children.length === 2) {
             // Для того, чтобы все дочерние элементы, кроме тех,
             // что описаны в этом файле, были перенаправлены в
             // mouseArea. Это необходимо для того, чтобы drag
@@ -64,7 +64,7 @@ FormObject {
             childrens[mouseArea.children.length] = children[1];
             mouseArea.children = childrens;
             children = [children[0], ];
-        }
+        }*/
     }
 
     MouseArea {

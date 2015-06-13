@@ -106,10 +106,6 @@ Rectangle {
                             x: 10; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
                             canvasDY: -actionsToolsContainer.realPositionY
-
-                            onPositionChanged: {
-                                pyconsole.out(canvasDY)
-                            }
                         }
 
                         Wait {

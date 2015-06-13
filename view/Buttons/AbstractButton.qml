@@ -34,6 +34,7 @@ FormObject {
     signal released
     signal entered
     signal exited
+    signal changeMousePosition
 
 
     MouseArea {
@@ -41,6 +42,10 @@ FormObject {
         anchors.fill: parent
 
         hoverEnabled: true
+
+        onPositionChanged: {
+            parent.changeMousePosition();
+        }
 
         onClicked: {
             parent.clicked();

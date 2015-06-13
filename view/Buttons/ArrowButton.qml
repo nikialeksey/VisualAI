@@ -37,6 +37,14 @@ AbstractButton {
     property string hoveredColor
     color: normalColor
 
+    signal drawArrow
+
+    onChangeMousePosition: {
+        if (isPressed) {
+            arrowButton.drawArrow();
+        }
+    }
+
     Behavior on color {
         NormalColorAnimation {}
     }

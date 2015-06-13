@@ -38,6 +38,16 @@ AbstractButton {
     color: normalColor
 
     signal drawArrow
+    signal drawArrowBegin
+    signal drawArrowEnd
+
+    onPressed: {
+        arrowButton.drawArrowBegin();
+    }
+
+    onReleased: {
+        arrowButton.drawArrowEnd();
+    }
 
     onChangeMousePosition: {
         if (isPressed) {

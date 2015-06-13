@@ -50,6 +50,8 @@ DnDObject {
     property real canvasDY: 0
     property string arrowPointColor: '#A69F00'
 
+    property Canvas canvas
+
     function createPrototypeComponent() {
         return Qt.createComponent('ToolObject.qml');
     }
@@ -68,6 +70,7 @@ DnDObject {
                         canvasDX: toolObject.canvasDX,
                         canvasDY: toolObject.canvasDY,
                         color: toolObject.color,
+                        canvas: toolObject.canvas,
                     }
             );
             incubator.onStatusChanged = function (status) {
@@ -116,6 +119,10 @@ DnDObject {
         onExited: {
             width = toolObject.arrowButtonWidth;
             height = toolObject.arrowButtonHeight;
+        }
+
+        onDrawArrow: {
+
         }
     }
 

@@ -72,6 +72,7 @@ Rectangle {
                         Sequence {
                             x: 10; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
+                            canvas: canvas
                         }
 
                         Selector {
@@ -163,7 +164,7 @@ Rectangle {
 
 
         Rectangle {
-            id: canvas
+            id: canvasRectangle
             color: canvasPanelColor
             width: wrapper.width - toolsWidth
             height: wrapper.height
@@ -171,10 +172,10 @@ Rectangle {
 
             Canvas {
 
-                id: cnv
+                id: canvas
                 anchors.fill: parent
                 onPaint: {
-                    var ctx = cnv.getContext('2d');
+                    var ctx = canvas.getContext('2d');
                     ctx.strokeStyle = 'rgb(255, 100, 55, 1.0)';
                     ctx.beginPath();
                     ctx.moveTo(75,40);
@@ -184,8 +185,8 @@ Rectangle {
                     ctx.bezierCurveTo(110,102,130,80,130,62.5);
                     ctx.bezierCurveTo(130,62.5,130,25,100,25);
                     ctx.bezierCurveTo(85,25,75,37,75,40);
-                    ctx.stroke();
                     ctx.closePath();
+                    ctx.stroke();
                 }
             }
 
@@ -202,7 +203,7 @@ Rectangle {
                 State {
                     when: canvasDrop.containsDrag
                     PropertyChanges {
-                        target: canvas
+                        target: canvasRectangle
                         color: canvasPanelDropColor
                     }
                 }

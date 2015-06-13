@@ -27,7 +27,7 @@ import PyConsole 1.0
 import "../Animations"
 
 AbstractButton {
-    id: abstractButton
+    id: arrowButton
     property string normalColor
     property string pressedColor
     property string hoveredColor
@@ -40,17 +40,17 @@ AbstractButton {
     states: [
         State {
             name: ''
-            PropertyChanges {target: textButton; color: normalColor}
+            PropertyChanges {target: arrowButton; color: normalColor}
         },
         State {
             name: 'pressed'
             when: isPressed
-            PropertyChanges {target: textButton; color: pressedColor}
+            PropertyChanges {target: arrowButton; color: pressedColor}
         },
         State {
             name: 'hovered'
             when: isHovered
-            PropertyChanges {target: textButton; color: hoveredColor}
+            PropertyChanges {target: arrowButton; color: hoveredColor}
         }
     ]
 }

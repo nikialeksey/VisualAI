@@ -75,6 +75,8 @@ DnDObject {
                     var obj = incubator.object;
                     toolObject.isPrototype = false;
                     toolObject.z = 4;
+                    leftPoint.visible = true;
+                    rightPoint.visible = true;
                 }
             }
         }
@@ -89,39 +91,57 @@ DnDObject {
         }
     }
 
+    // TODO arrowButtonWidth/Height не передастся копии объекта при dragStart, если его переопределят извне
+    property real arrowButtonWidth: 10
+    property real arrowButtonHeight: height
+
     NormalArrowButton {
         id: leftPoint
-        width: 10
-        height: 10
         x: -width
         y: toolObject.height / 2 - height / 2
+        visible: false
 
         onEntered: {
             width *= 2;
             height *= 2;
         }
 
+        onVisibleChanged: {
+            if (visible) {
+                width = toolObject.arrowButtonWidth;
+                height = toolObject.arrowButtonHeight;
+            }
+        }
+
         onExited: {
-            width /= 2;
-            height /= 2;
+            width = toolObject.arrowButtonWidth;
+            height = toolObject.arrowButtonHeight;
         }
     }
 
     NormalArrowButton {
         id: rightPoint
-        width: 10
-        height: 10
+        width: toolObject.arrowButtonWidth
+        height: toolObject.arrowButtonHeight
         x: toolObject.width
         y: toolObject.height / 2 - height / 2
+        visible: false
 
         onEntered: {
             width *= 2;
             height *= 2;
         }
 
+        onVisibleChanged: {
+            if (visible) {
+                width = toolObject.arrowButtonWidth;
+                height = toolObject.arrowButtonHeight;
+            }
+        }
+
         onExited: {
-            width /= 2;
-            height /= 2;
+            width = toolObject.arrowButtonWidth;
+            height = toolObject.arrowButtonHeight;
         }
     }
 }

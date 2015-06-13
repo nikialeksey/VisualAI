@@ -93,8 +93,18 @@ DnDObject {
         id: leftPoint
         width: 10
         height: 10
-        x: -10
+        x: -width
         y: toolObject.height / 2 - height / 2
+
+        onEntered: {
+            width *= 2;
+            height *= 2;
+        }
+
+        onExited: {
+            width /= 2;
+            height /= 2;
+        }
     }
 
     NormalArrowButton {
@@ -103,5 +113,15 @@ DnDObject {
         height: 10
         x: toolObject.width
         y: toolObject.height / 2 - height / 2
+
+        onEntered: {
+            width *= 2;
+            height *= 2;
+        }
+
+        onExited: {
+            width /= 2;
+            height /= 2;
+        }
     }
 }

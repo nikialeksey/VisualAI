@@ -24,10 +24,22 @@ SOFTWARE.
 
 import QtQuick 2.4
 import PyConsole 1.0
+import "../Animations"
 
 ArrowButton {
     normalColor: '#A69F00'
     pressedColor: '#FFFA73'
     hoveredColor: '#FFF840'
 
+    Behavior on width {
+        NormalNumberAnimation {}
+    }
+
+    Behavior on height {
+        NormalNumberAnimation {}
+    }
+
+    Behavior on radius {
+        NormalNumberAnimation {}
+    }
 }

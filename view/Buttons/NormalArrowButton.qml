@@ -64,4 +64,8 @@ ArrowButton {
     Behavior on radius {
         NormalNumberAnimation {}
     }
+
+    Behavior on opacity {
+        NormalNumberAnimation {}
+    }
 }

@@ -53,6 +53,14 @@ DnDObject {
     property real canvasDY: 0
     property string arrowPointColor: '#A69F00'
 
+    property bool leftPointVisible: true // активна ли левая кнопка для стрелочек
+    property bool rightPointVisible: true // активна ли правая кнопка для стрелочек
+    property int maxLeftArrows: 1 // сколько стрелочек могут входить в левую кнопку
+    property int maxRightArrows: -1 // сколько стрелочек могут входить в правую кнопку (-1 - бесконечно много)
+
+    property real arrowButtonWidth: 10
+    property real arrowButtonHeight: height
+
     property Canvas canvas
 
     function createPrototypeComponent() {
@@ -74,6 +82,12 @@ DnDObject {
                         canvasDY: toolObject.canvasDY,
                         color: toolObject.color,
                         canvas: toolObject.canvas,
+                        leftPointVisible: toolObject.leftPointVisible,
+                        rightPointVisible: toolObject.rightPointVisible,
+                        maxLeftArrows: toolObject.maxLeftArrows,
+                        maxRightArrows: toolObject.maxRightArrows,
+                        arrowButtonWidth: toolObject.arrowButtonWidth,
+                        arrowButtonHeight: toolObject.arrowButtonHeight,
                     }
             );
             incubator.onStatusChanged = function (status) {
@@ -81,8 +95,8 @@ DnDObject {
                     var obj = incubator.object;
                     toolObject.isPrototype = false;
                     toolObject.z = 4;
-                    leftPoint.visible = true;
-                    rightPoint.visible = true;
+                    leftPoint.visible = leftPointVisible;
+                    rightPoint.visible = leftPointVisible;
                 }
             }
         }
@@ -96,14 +110,6 @@ DnDObject {
             y = y - canvasDY;
         }
     }
-
-    onPositionChanged: {
-        //leftPoint.updateArrowsPosition();
-    }
-
-    // TODO arrowButtonWidth/Height не передастся копии объекта при dragStart, если его переопределят извне
-    property real arrowButtonWidth: 10
-    property real arrowButtonHeight: height
 
     Component {
         id: bezierCurvePrototype
@@ -127,6 +133,22 @@ DnDObject {
 
         function getArrowEndY() {
             return toolObject.y + toolObject.height / 2;
+        }
+
+        function addArrow(arrow) {
+            if (arrows.length == toolObject.maxLeftArrows) {
+                var i;
+                arrows[0].destroy();
+                for (i = 1; i < arrows.length; i++) {
+                    arrows[i - 1] = arrows[i];
+                }
+
+                arrows.pop();
+            }
+            arrow.endX = Qt.binding(getArrowEndX);
+            arrow.endY = Qt.binding(getArrowEndY);
+
+            arrows.push(arrow);
         }
 
         onVisibleChanged: {
@@ -161,24 +183,17 @@ DnDObject {
         }
 
         onDrawArrowEnd: {
-            var i;
-            for (i = 0; i < arrows.length; i++) {
-                arrows[i].destroy();
-            }
-            arrows = []
+            addArrow(arrow);
 
             var dropArea = arrow.Drag.target
             if (dropArea) {
                 var rightPoint = dropArea.parent;
                 var toolObject = rightPoint.parent;
 
-                arrow.startX = Qt.binding(rightPoint.getArrowStartX);
-                arrow.startY = Qt.binding(rightPoint.getArrowStartY);
-                rightPoint.arrows.push(arrow);
+                rightPoint.addArrow(arrow);
             }
 
             arrow.Drag.active = false;
-            arrows[0] = arrow;
             arrow = null;
         }
 
@@ -199,8 +214,7 @@ DnDObject {
                 when: leftPointDrop.containsDrag
                 PropertyChanges {
                     target: leftPoint
-                    width: realButtonWidth * 2
-                    height: realButtonHeight * 2
+                    opacity: 0.8
                 }
             }
         ]
@@ -220,6 +234,21 @@ DnDObject {
 
         function getArrowStartY() {
             return toolObject.y + toolObject.height / 2;
+        }
+
+        function addArrow(arrow) {
+            if (arrows.length == toolObject.maxRightArrows) {
+                var i;
+                arrows[0].destroy();
+                for (i = 1; i < arrows.length; i++) {
+                    arrows[i - 1] = arrows[i];
+                }
+                arrows.pop();
+            }
+            arrow.startX = Qt.binding(getArrowStartX);
+            arrow.startY = Qt.binding(getArrowStartY);
+
+            arrows.push(arrow);
         }
 
         onDrawArrowBegin: {
@@ -247,24 +276,14 @@ DnDObject {
         }
 
         onDrawArrowEnd: {
-            var dropArea = arrow.Drag.target
+            addArrow(arrow);
+            var dropArea = arrow.Drag.target;
             if (dropArea) {
                 var leftPoint = dropArea.parent;
-                var toolObject = leftPoint.parent;
-
-                arrow.endX = Qt.binding(leftPoint.getArrowEndX);
-                arrow.endY = Qt.binding(leftPoint.getArrowEndY);
-
-                var i;
-                for (i = 0; i < leftPoint.arrows.length; i++){
-                    leftPoint.arrows[i].destroy();
-                }
-                leftPoint.arrows = [];
-                leftPoint.arrows.push(arrow);
+                leftPoint.addArrow(arrow);
             }
 
             arrow.Drag.active = false;
-            arrows.push(arrow);
             arrow = null;
         }
 
@@ -285,8 +304,7 @@ DnDObject {
                 when: rightPointDrop.containsDrag
                 PropertyChanges {
                     target: rightPoint
-                    width: realButtonWidth * 2
-                    height: realButtonHeight * 2
+                    opacity: 0.8
                 }
             }
         ]

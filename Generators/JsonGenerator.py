@@ -101,7 +101,6 @@ class JsonGenerator(QQuickItem):
         c = self._generateCode(d, 3)
         file = open(self._fileName[8:], 'w')
         file.write(
-
 """
 import org.nikialeksey.gameengine.ai.behaviortree.*;
 import org.nikialeksey.gameengine.ai.behaviortree.Actions.*;

@@ -32,6 +32,8 @@ AbstractButton {
     }
 
     id: arrowButton
+    property var arrows: [] // список всех стрелочек, торчащих из этой кнопки
+    property var arrow // текущая стрелочка (она в данный момент двигается вместе с мышкой)
     property string normalColor
     property string pressedColor
     property string hoveredColor
@@ -40,6 +42,7 @@ AbstractButton {
     signal drawArrow
     signal drawArrowBegin
     signal drawArrowEnd
+
 
     onPressed: {
         arrowButton.drawArrowBegin();

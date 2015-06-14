@@ -113,6 +113,29 @@ DnDObject {
         }
     }
 
+    onEntered: {
+        if (!isPrototype) {
+            redX.opacity = 1;
+        }
+    }
+
+    onExited: {
+        if (!isPrototype) {
+            redX.opacity = 0;
+        }
+    }
+
+    NormalRedXButton {
+        id: redX
+        width: parent.width
+        z: 1
+        opacity: 0
+
+        onClicked: {
+            parent.destruct();
+        }
+    }
+
     Component {
         id: bezierCurvePrototype
         BezierCurve {
@@ -356,6 +379,8 @@ DnDObject {
             arrow.destroy();
         }
         rightPoint.arrows.splice(0, rightPoint.arrows.length);
+
+        parent = null;
     }
 
     Component.onDestruction: {

@@ -23,8 +23,21 @@ SOFTWARE.
 */
 
 import QtQuick 2.4
+import Curves 1.0
 
-MainForm {
+//MainForm {}
 
+Rectangle {
+    width: 500
+    height: 500
+    BezierCurve {
+        id: curve
+        startX: 300; startY: 30
+        endX: 200; endY: 300
+        color: 'black'
+        curveWidth: 2
+        startArrow: true
+        endArrow: true
+    }
 }
 

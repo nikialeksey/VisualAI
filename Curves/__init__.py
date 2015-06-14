@@ -22,36 +22,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from PyQt5.QtCore import QUrl, QObject, pyqtSlot
-from PyQt5.QtGui import QGuiApplication
-from PyQt5.QtQuick import QQuickView
-from PyQt5.QtQml import qmlRegisterType
-
-class ConsoleOutput(QObject):
-    def __init__(self, parent=None):
-        super(ConsoleOutput, self).__init__(parent)
-
-    @pyqtSlot(str)
-    def out(self, obj):
-        print(obj)
-
-if __name__ == '__main__':
-    import sys
-    from Curves import BezierCurve
-
-    app = QGuiApplication(sys.argv)
-
-    qmlRegisterType(ConsoleOutput, 'PyConsole', 1, 0, 'PyConsole')
-    qmlRegisterType(BezierCurve, 'Curves', 1, 0, 'BezierCurve')
-
-    view = QQuickView()
-    context = view.rootContext()
-
-    view.engine().quit.connect(app.quit)
-    view.setResizeMode(QQuickView.SizeRootObjectToView)
-    view.setSource(
-        QUrl.fromLocalFile('../view/visionai.qml')
-    )
-    view.show()
-
-    sys.exit(app.exec_())
+from .BezierCurve import BezierCurve

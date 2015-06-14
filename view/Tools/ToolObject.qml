@@ -183,17 +183,18 @@ DnDObject {
         }
 
         onDrawArrowEnd: {
-            addArrow(arrow);
-
             var dropArea = arrow.Drag.target
             if (dropArea) {
+                addArrow(arrow);
+
                 var rightPoint = dropArea.parent;
                 var toolObject = rightPoint.parent;
 
                 rightPoint.addArrow(arrow);
+                arrow.Drag.active = false;
+            } else {
+                arrow.destroy();
             }
-
-            arrow.Drag.active = false;
             arrow = null;
         }
 
@@ -276,14 +277,17 @@ DnDObject {
         }
 
         onDrawArrowEnd: {
-            addArrow(arrow);
             var dropArea = arrow.Drag.target;
             if (dropArea) {
+                addArrow(arrow);
+
                 var leftPoint = dropArea.parent;
                 leftPoint.addArrow(arrow);
-            }
 
-            arrow.Drag.active = false;
+                arrow.Drag.active = false;
+            } else {
+                arrow.destroy();
+            }
             arrow = null;
         }
 

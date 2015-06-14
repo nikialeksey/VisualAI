@@ -29,6 +29,7 @@ import "Animations"
 import "Tools"
 import "Tools/Actions"
 import "Tools/Composites"
+import "Tools/Decorators"
 
 Rectangle {
     PyConsole {
@@ -128,9 +129,8 @@ Rectangle {
                         height: 100
                         width: toolsWidth - parent.spacing * 2
 
-                        DecoratorObject {
+                        Inverter {
                             x: 10; y: 25
-                            //canvasDX: toolsWidth - 10
                             canvasDX: toolsPanel.distanceToCanvasX
                             canvasDY: -actionsToolsContainer.realPositionY
                         }

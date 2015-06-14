@@ -27,9 +27,29 @@ import PyConsole 1.0
 import "../Animations"
 
 ArrowButton {
-    normalColor: '#A69F00'
-    pressedColor: '#FFFA73'
-    hoveredColor: '#FFF840'
+    property real realButtonWidth
+    property real realButtonHeight
+
+    normalColor: '#A468D5'
+    pressedColor: '#9240D5'
+    hoveredColor: '#582781'
+
+    onEntered: {
+        width *= 2;
+        height *= 2;
+    }
+
+    onVisibleChanged: {
+        if (visible) {
+            width = realButtonWidth;
+            height = realButtonHeight;
+        }
+    }
+
+    onExited: {
+        width = realButtonWidth;
+        height = realButtonHeight;
+    }
 
     Behavior on width {
         NormalNumberAnimation {}

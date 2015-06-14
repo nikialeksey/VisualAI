@@ -154,13 +154,22 @@ DnDObject {
         }
 
         onDrawArrowEnd: {
-            arrows.push(arrow);
+            var i;
+            for (i = 0; i < arrows.length; i++) {
+                arrows[i].destroy();
+            }
+            arrows[0] = arrow;
             arrow = null;
         }
 
         onDrawArrow: {
             arrow.startX = toolObject.x - toolObject.arrowButtonWidth + mouseX;
             arrow.startY = toolObject.y + mouseY;
+        }
+
+        DropArea {
+            id: leftPointDrop
+            anchors.fill: parent
         }
     }
 

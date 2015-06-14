@@ -46,6 +46,8 @@ DnDObject {
     dragMinimumY: -10000
     dragMaximumY: 10000
 
+    Drag.keys: ['tool', ]
+
     property bool isPrototype: true
     property real canvasDX: 0
     property real canvasDY: 0
@@ -138,8 +140,6 @@ DnDObject {
             var incubator = bezierCurvePrototype.incubateObject(
                 toolObject.canvas,
                 {
-                    'endX': Qt.binding(getArrowEndX),
-                    'endY': Qt.binding(getArrowEndY),
                     'endArrow': true,
                 }
             );
@@ -147,8 +147,15 @@ DnDObject {
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
                     arrow = incubator.object;
+                    arrow.endX = Qt.binding(getArrowEndX);
+                    arrow.endY = Qt.binding(getArrowEndY);
                     arrow.startX = toolObject.x - toolObject.arrowButtonWidth + mouseX;
                     arrow.startY = toolObject.y + mouseY;
+
+                    arrow.Drag.active = true;
+                    arrow.Drag.keys = ['left', ];
+                    arrow.Drag.hotSpot.x = Qt.binding(function() {return arrow.startX;});
+                    arrow.Drag.hotSpot.y = Qt.binding(function() {return arrow.startY;});
                 }
             };
         }
@@ -158,6 +165,19 @@ DnDObject {
             for (i = 0; i < arrows.length; i++) {
                 arrows[i].destroy();
             }
+            arrows = []
+
+            var dropArea = arrow.Drag.target
+            if (dropArea) {
+                var rightPoint = dropArea.parent;
+                var toolObject = rightPoint.parent;
+
+                arrow.startX = Qt.binding(rightPoint.getArrowStartX);
+                arrow.startY = Qt.binding(rightPoint.getArrowStartY);
+                rightPoint.arrows.push(arrow);
+            }
+
+            arrow.Drag.active = false;
             arrows[0] = arrow;
             arrow = null;
         }
@@ -170,7 +190,20 @@ DnDObject {
         DropArea {
             id: leftPointDrop
             anchors.fill: parent
+
+            keys: ['right', ]
         }
+
+        states: [
+            State {
+                when: leftPointDrop.containsDrag
+                PropertyChanges {
+                    target: leftPoint
+                    width: realButtonWidth * 2
+                    height: realButtonHeight * 2
+                }
+            }
+        ]
     }
 
     NormalArrowButton {
@@ -193,8 +226,6 @@ DnDObject {
             var incubator = bezierCurvePrototype.incubateObject(
                 toolObject.canvas,
                 {
-                    'endX': toolObject.x + toolObject.width + toolObject.arrowButtonWidth + mouseX,
-                    'endY': toolObject.y + mouseY,
                     'endArrow': true,
                 }
             );
@@ -202,20 +233,62 @@ DnDObject {
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
                     arrow = incubator.object;
+                    arrow.endX = toolObject.x + toolObject.width + mouseX;
+                    arrow.endY = toolObject.y + mouseY;
                     arrow.startX = Qt.binding(getArrowStartX);
                     arrow.startY = Qt.binding(getArrowStartY);
+
+                    arrow.Drag.active = true;
+                    arrow.Drag.keys = ['right', ];
+                    arrow.Drag.hotSpot.x = Qt.binding(function() {return arrow.endX;});
+                    arrow.Drag.hotSpot.y = Qt.binding(function() {return arrow.endY;});
                 }
             };
         }
 
         onDrawArrowEnd: {
+            var dropArea = arrow.Drag.target
+            if (dropArea) {
+                var leftPoint = dropArea.parent;
+                var toolObject = leftPoint.parent;
+
+                arrow.endX = Qt.binding(leftPoint.getArrowEndX);
+                arrow.endY = Qt.binding(leftPoint.getArrowEndY);
+
+                var i;
+                for (i = 0; i < leftPoint.arrows.length; i++){
+                    leftPoint.arrows[i].destroy();
+                }
+                leftPoint.arrows = [];
+                leftPoint.arrows.push(arrow);
+            }
+
+            arrow.Drag.active = false;
             arrows.push(arrow);
             arrow = null;
         }
 
         onDrawArrow: {
-            arrow.endX = toolObject.x + toolObject.width + toolObject.arrowButtonWidth + mouseX;
+            arrow.endX = toolObject.x + toolObject.width + mouseX;
             arrow.endY = toolObject.y + mouseY;
         }
+
+        DropArea {
+            id: rightPointDrop
+            anchors.fill: parent
+
+            keys: ['left', ]
+        }
+
+        states: [
+            State {
+                when: rightPointDrop.containsDrag
+                PropertyChanges {
+                    target: rightPoint
+                    width: realButtonWidth * 2
+                    height: realButtonHeight * 2
+                }
+            }
+        ]
     }
 }

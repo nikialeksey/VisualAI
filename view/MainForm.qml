@@ -184,6 +184,7 @@ Rectangle {
             DropArea {
                 id: canvasDrop
                 anchors.fill: parent
+                keys: ['tool', ]
             }
 
             Behavior on color {

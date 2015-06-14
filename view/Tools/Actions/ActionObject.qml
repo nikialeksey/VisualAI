@@ -27,5 +27,6 @@ import PyConsole 1.0
 import "../"
 
 ToolObject {
+    rightPointVisible: false
 
 }

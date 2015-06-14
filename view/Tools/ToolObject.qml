@@ -96,7 +96,7 @@ DnDObject {
                     toolObject.isPrototype = false;
                     toolObject.z = 4;
                     leftPoint.visible = leftPointVisible;
-                    rightPoint.visible = leftPointVisible;
+                    rightPoint.visible = rightPointVisible;
                 }
             }
         }

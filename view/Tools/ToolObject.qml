@@ -48,6 +48,8 @@ DnDObject {
 
     Drag.keys: ['tool', ]
 
+    property bool isDeletable: true
+
     property bool isPrototype: true
     property real canvasDX: 0
     property real canvasDY: 0
@@ -114,13 +116,13 @@ DnDObject {
     }
 
     onEntered: {
-        if (!isPrototype) {
+        if (!isPrototype && isDeletable) {
             redX.opacity = 1;
         }
     }
 
     onExited: {
-        if (!isPrototype) {
+        if (!isPrototype && isDeletable) {
             redX.opacity = 0;
         }
     }
@@ -131,7 +133,7 @@ DnDObject {
         z: 1
         opacity: 0
 
-        visible: !parent.isPrototype
+        visible: !parent.isPrototype && parent.isDeletable
 
         onClicked: {
             parent.destruct();

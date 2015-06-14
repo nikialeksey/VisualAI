@@ -31,6 +31,5 @@ ToolObject {
         id: pyconsole
     }
 
-    maxLeftArrows: 1
-    maxRightArrows: 1
+    maxChildrenCount: 1
 }

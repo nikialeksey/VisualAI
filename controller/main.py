@@ -38,11 +38,13 @@ class ConsoleOutput(QObject):
 if __name__ == '__main__':
     import sys
     from Curves import BezierCurve
+    from Generators import JsonGenerator
 
     app = QGuiApplication(sys.argv)
 
     qmlRegisterType(ConsoleOutput, 'PyConsole', 1, 0, 'PyConsole')
     qmlRegisterType(BezierCurve, 'Curves', 1, 0, 'BezierCurve')
+    qmlRegisterType(JsonGenerator, 'Generators', 1, 0, 'JsonGenerator')
 
     view = QQuickView()
     context = view.rootContext()

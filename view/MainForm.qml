@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 import QtQuick 2.4
+import QtQuick.Dialogs 1.2
 import PyConsole 1.0
 import "Buttons"
 import "Animations"
@@ -30,6 +31,7 @@ import "Tools"
 import "Tools/Actions"
 import "Tools/Composites"
 import "Tools/Decorators"
+import Generators 1.0
 
 Rectangle {
     PyConsole {
@@ -156,6 +158,10 @@ Rectangle {
                     NormalTextButton {
                         text: "Export JSON"
                         width: toolsWidth - 10
+
+                        onClicked: {
+                            exportJsonFileDialog.open();
+                        }
                     }
 
                     NormalTextButton {
@@ -207,5 +213,24 @@ Rectangle {
                 }
             ]
         }
+    }
+
+    FileDialog {
+        id: exportJsonFileDialog
+        title: "Выберете файл для сохранения дерева в json-формате"
+        selectExisting: false
+        selectFolder: false
+        selectMultiple: false
+        nameFilters: ["Json Files (*.json)", ]
+
+        onAccepted: {
+            jsonGenerator.fileName = fileUrl;
+            jsonGenerator.rootNode = rootNode;
+            jsonGenerator.generate();
+        }
+    }
+
+    JsonGenerator {
+        id: jsonGenerator
     }
 }

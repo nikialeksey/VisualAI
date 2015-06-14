@@ -95,6 +95,10 @@ DnDObject {
         }
     }
 
+    onPositionChanged: {
+        //leftPoint.updateArrowsPosition();
+    }
+
     // TODO arrowButtonWidth/Height не передастся копии объекта при dragStart, если его переопределят извне
     property real arrowButtonWidth: 10
     property real arrowButtonHeight: height
@@ -109,15 +113,18 @@ DnDObject {
 
     NormalArrowButton {
         id: leftPoint
+        realButtonWidth: toolObject.arrowButtonWidth
+        realButtonHeight: toolObject.arrowButtonHeight
         x: -width
         y: toolObject.height / 2 - height / 2
         visible: false
 
-        property var arrow
+        function getArrowEndX() {
+            return toolObject.x - toolObject.arrowButtonWidth / 2;
+        }
 
-        onEntered: {
-            width *= 2;
-            height *= 2;
+        function getArrowEndY() {
+            return toolObject.y + toolObject.height / 2;
         }
 
         onVisibleChanged: {
@@ -127,17 +134,13 @@ DnDObject {
             }
         }
 
-        onExited: {
-            width = toolObject.arrowButtonWidth;
-            height = toolObject.arrowButtonHeight;
-        }
-
         onDrawArrowBegin: {
             var incubator = bezierCurvePrototype.incubateObject(
                 toolObject.canvas,
                 {
-                    'endX': toolObject.x - toolObject.arrowButtonWidth / 2,
-                    'endY': toolObject.y + toolObject.height / 2,
+                    'endX': Qt.binding(getArrowEndX),
+                    'endY': Qt.binding(getArrowEndY),
+                    'endArrow': true,
                 }
             );
 
@@ -151,6 +154,7 @@ DnDObject {
         }
 
         onDrawArrowEnd: {
+            arrows.push(arrow);
             arrow = null;
         }
 
@@ -162,50 +166,41 @@ DnDObject {
 
     NormalArrowButton {
         id: rightPoint
-        width: toolObject.arrowButtonWidth
-        height: toolObject.arrowButtonHeight
+        realButtonWidth: toolObject.arrowButtonWidth
+        realButtonHeight: toolObject.arrowButtonHeight
         x: toolObject.width
         y: toolObject.height / 2 - height / 2
         visible: false
 
-        property var arrow
-
-        onEntered: {
-            width *= 2;
-            height *= 2;
+        function getArrowStartX() {
+            return toolObject.x + toolObject.width + toolObject.arrowButtonWidth / 2;
         }
 
-        onVisibleChanged: {
-            if (visible) {
-                width = toolObject.arrowButtonWidth;
-                height = toolObject.arrowButtonHeight;
-            }
-        }
-
-        onExited: {
-            width = toolObject.arrowButtonWidth;
-            height = toolObject.arrowButtonHeight;
+        function getArrowStartY() {
+            return toolObject.y + toolObject.height / 2;
         }
 
         onDrawArrowBegin: {
             var incubator = bezierCurvePrototype.incubateObject(
                 toolObject.canvas,
                 {
-                    'startX': toolObject.x + toolObject.width + toolObject.arrowButtonWidth / 2,
-                    'startY': toolObject.y + toolObject.height / 2,
+                    'endX': toolObject.x + toolObject.width + toolObject.arrowButtonWidth + mouseX,
+                    'endY': toolObject.y + mouseY,
+                    'endArrow': true,
                 }
             );
 
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
                     arrow = incubator.object;
-                    arrow.endX = toolObject.x + toolObject.width + toolObject.arrowButtonWidth + mouseX;
-                    arrow.endY = toolObject.y + mouseY;
+                    arrow.startX = Qt.binding(getArrowStartX);
+                    arrow.startY = Qt.binding(getArrowStartY);
                 }
             };
         }
 
         onDrawArrowEnd: {
+            arrows.push(arrow);
             arrow = null;
         }
 

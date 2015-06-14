@@ -30,6 +30,8 @@ FormObject {
         id: pyconsole
     }
 
+    property bool isDragEnable: true
+
     property bool isDrag: false
     property bool isHovered: false
 
@@ -72,6 +74,9 @@ FormObject {
 
     MouseArea {
         id: mouseArea
+
+        enabled: parent.isDragEnable
+
         hoverEnabled: true
         anchors.fill: parent
         drag.target: parent

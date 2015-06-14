@@ -54,4 +54,12 @@ if __name__ == '__main__':
     )
     view.show()
 
-    sys.exit(app.exec_())
+    for error in view.errors():
+        print(error.toString())
+
+    status = app.exec_()
+
+    for error in view.errors():
+        print(error.toString())
+
+    sys.exit(status)

@@ -177,6 +177,14 @@ Rectangle {
             Canvas {
                 id: canvas
                 anchors.fill: parent
+
+                Root {
+                    id: rootNode
+                    x: 10
+                    y: parent.height/2 - height/2
+                    isPrototype: false
+                    canvas: canvas
+                }
             }
 
             DropArea {

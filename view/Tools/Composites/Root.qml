@@ -32,4 +32,8 @@ Sequence {
     isDeletable: false
     isDragEnabled: false
     leftPointVisible: false
+
+    Component.onCompleted: {
+        _rightPoint.visible = true;
+    }
 }

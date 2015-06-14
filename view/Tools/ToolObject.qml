@@ -50,6 +50,9 @@ DnDObject {
 
     property bool isDeletable: true
 
+    property var _leftPoint: leftPoint
+    property var _rightPoint: rightPoint
+
     property bool isPrototype: true
     property real canvasDX: 0
     property real canvasDY: 0

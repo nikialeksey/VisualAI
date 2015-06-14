@@ -106,6 +106,10 @@ DnDObject {
 
             x = x - canvasDX;
             y = y - canvasDY;
+
+            if (parent == null) {
+                destruct();
+            }
         }
     }
 
@@ -334,5 +338,26 @@ DnDObject {
                 }
             }
         ]
+    }
+
+    function destruct() {
+        if (leftPoint.parentArrow) {
+            var _rightPoint = leftPoint.parentArrow.rightPoint;
+            _rightPoint.removeArrow(leftPoint.parentArrow);
+            leftPoint.parentArrow.destroy();
+        }
+
+        var i;
+        for (i = 0; i < rightPoint.arrows.length; i++) {
+            var arrow = rightPoint.arrows[i];
+            if (arrow && arrow.leftPoint) {
+                arrow.leftPoint.removeArrow(arrow);
+            }
+            arrow.destroy();
+        }
+        rightPoint.arrows.splice(0, rightPoint.arrows.length);
+    }
+
+    Component.onDestruction: {
     }
 }

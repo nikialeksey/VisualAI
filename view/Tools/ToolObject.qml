@@ -48,6 +48,8 @@ DnDObject {
 
     Drag.keys: ['tool', ]
 
+    property string actualName: 'toolObject'
+
     property bool isDeletable: true
 
     property var _leftPoint: leftPoint

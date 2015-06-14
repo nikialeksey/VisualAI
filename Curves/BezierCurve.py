@@ -182,9 +182,9 @@ class BezierCurve(QQuickPaintedItem):
     def paint(self, painter: QPainter):
         painter_path = QPainterPath()
         painter_path.moveTo(self._startX, self._startY)
-        x1 = self._endX
+        x1 = (7 * self._endX + self._startX) / 8
         y1 = self._startY
-        x2 = self._startX
+        x2 = (self._endX + 7 * self._startX) / 8
         y2 = self._endY
         painter_path.cubicTo(x1, y1, x2, y2, self._endX, self._endY)
 

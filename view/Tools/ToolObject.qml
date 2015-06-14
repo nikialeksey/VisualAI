@@ -131,6 +131,8 @@ DnDObject {
         z: 1
         opacity: 0
 
+        visible: !parent.isPrototype
+
         onClicked: {
             parent.destruct();
         }

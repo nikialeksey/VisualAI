@@ -45,7 +45,6 @@ Rectangle {
     id: wrapper
     width: 1024
     height: 600
-    z: 0
 
     Row {
         x: 0; y: 0
@@ -56,7 +55,6 @@ Rectangle {
                 width: toolsWidth
                 height: wrapper.height - controlsPanel.height
                 color: toolsPanelColor
-                z: 2
 
                 property real distanceToCanvasX: toolsWidth - 10
 
@@ -68,7 +66,6 @@ Rectangle {
                         title: 'Composites'
                         height: 150
                         width: toolsWidth - parent.spacing * 2
-
 
                         Sequence {
                             x: 10; y: 25
@@ -147,7 +144,6 @@ Rectangle {
                 color: controlsPanelColor
                 width: toolsWidth
                 height: 150
-                z: 2
 
                 Column {
                     spacing: 10
@@ -176,7 +172,7 @@ Rectangle {
             color: canvasPanelColor
             width: wrapper.width - toolsWidth
             height: wrapper.height
-            z: -10
+            z: -1
 
             Canvas {
                 id: canvas

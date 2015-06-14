@@ -153,6 +153,10 @@ Rectangle {
                     NormalTextButton {
                         text: "Generate"
                         width: toolsWidth - 10
+
+                        onClicked: {
+                            generateCodeFileDialog.open();
+                        }
                     }
 
                     NormalTextButton {
@@ -227,6 +231,21 @@ Rectangle {
             jsonGenerator.fileName = fileUrl;
             jsonGenerator.rootNode = rootNode;
             jsonGenerator.generate();
+        }
+    }
+
+    FileDialog {
+        id: generateCodeFileDialog
+        title: "Выберете файл для сохранения дерева в java коде"
+        selectExisting: false
+        selectFolder: false
+        selectMultiple: false
+        nameFilters: ["Java (*.java)", ]
+
+        onAccepted: {
+            jsonGenerator.fileName = fileUrl;
+            jsonGenerator.rootNode = rootNode;
+            jsonGenerator.generateCode();
         }
     }
 

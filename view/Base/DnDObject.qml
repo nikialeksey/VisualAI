@@ -31,6 +31,7 @@ FormObject {
     }
 
     property bool isDrag: false
+    property bool isHovered: false
 
     property real dragMinimumX: x
     property real dragMaximumX: x
@@ -50,6 +51,8 @@ FormObject {
     signal clicked
     signal pressed
     signal released
+    signal entered
+    signal exited
 
     onChildrenChanged: {
         /*if (children.length === 2) {
@@ -69,7 +72,7 @@ FormObject {
 
     MouseArea {
         id: mouseArea
-
+        hoverEnabled: true
         anchors.fill: parent
         drag.target: parent
         drag.filterChildren: true
@@ -100,6 +103,16 @@ FormObject {
             }
 
             parent.released();
+        }
+
+        onEntered: {
+            parent.isHovered = true;
+            parent.entered();
+        }
+
+        onExited: {
+            parent.isHovered = false;
+            parent.exited();
         }
     }
 }

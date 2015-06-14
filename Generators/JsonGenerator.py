@@ -24,6 +24,7 @@ SOFTWARE.
 
 from PyQt5.QtQuick import QQuickItem
 from PyQt5.QtCore import pyqtSignal, pyqtProperty, pyqtSlot
+from PyQt5.QtQml import QQmlProperty
 
 class JsonGenerator(QQuickItem):
 
@@ -32,6 +33,16 @@ class JsonGenerator(QQuickItem):
 
         self._fileName = ''
         self._rootNode = None
+
+        self.name_to_method = {
+            '_generateSequence': self._generateSequence, '_generateInverter': self._generateInverter,
+            '_generateMemSelector': self._generateMemSelector, '_generateMemSequence': self._generateMemSequence,
+            '_generateParallel': self._generateParallel, '_generateSelector': self._generateSelector,
+            '_generateUserAction': self._generateUserAction, '_generateWait': self._generateWait,
+        }
+
+    def __getitem__(self, item):
+        return self.name_to_method.get(item)
 
     fileNameChanged = pyqtSignal()
 
@@ -59,4 +70,68 @@ class JsonGenerator(QQuickItem):
 
     @pyqtSlot()
     def generate(self):
-        print('generated')
+        file = open(self._fileName[8:], 'w')
+        entry = self._generate(self._rootNode, 1)
+        s = '{\n' + entry + '}\n'
+        file.write(s)
+        file.close()
+
+    def _generate(self, node: QQuickItem, offset: int) -> str:
+
+        s = (' ' * offset * 4) + self['_generate' + QQmlProperty.read(node, 'actualName')](node)
+
+        s += (' ' * (offset + 1) * 4) + "'children': [\n"
+        rightPoint = QQmlProperty.read(node, '_rightPoint')
+        if rightPoint is not None:
+            try:
+                arrows = QQmlProperty.read(rightPoint, 'arrows')
+                if arrows.isArray():
+                    for i in range(0, arrows.property('length').toInt()):
+                        arrow = arrows.property(i).toQObject()
+                        leftPoint = QQmlProperty.read(arrow, 'leftPoint')
+                        s += self._generate(leftPoint.parent(), offset + 2)
+            except Exception as e:
+                print(e)
+        s += (' ' * (offset + 1) * 4) + '],\n'
+        s += (' ' * offset * 4) + '},\n'
+        return s
+
+    def _generateSequence(self, node: QQuickItem) -> str:
+        s = "'Sequence': {\n"
+
+        return s
+
+    def _generateSelector(self, node: QQuickItem) -> str:
+        s = "'Selector': {\n"
+
+        return s
+
+    def _generateParallel(self, node: QQuickItem) -> str:
+        s = "'Parallel': {\n"
+
+        return s
+
+    def _generateMemSequence(self, node: QQuickItem) -> str:
+        s = "'MemSequence': {\n"
+
+        return s
+
+    def _generateMemSelector(self, node: QQuickItem) -> str:
+        s = "'MemSelector': {\n"
+
+        return s
+
+    def _generateUserAction(self, node: QQuickItem) -> str:
+        s = "'UserAction': {\n"
+
+        return s
+
+    def _generateWait(self, node: QQuickItem) -> str:
+        s = "'Wait': {\n"
+
+        return s
+
+    def _generateInverter(self, node: QQuickItem) -> str:
+        s = "'Inverter': {\n"
+
+        return s

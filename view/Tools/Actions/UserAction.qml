@@ -27,6 +27,8 @@ import PyConsole 1.0
 
 ActionObject {
 
+    actualName: 'UserAction'
+
     PyConsole {
         id: pyconsole
     }

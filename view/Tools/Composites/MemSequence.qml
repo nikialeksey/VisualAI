@@ -26,6 +26,8 @@ import QtQuick 2.4
 import PyConsole 1.0
 
 CompositeObject {
+    actualName: 'MemSequence'
+
     function createPrototypeComponent() {
         return Qt.createComponent('MemSequence.qml');
     }

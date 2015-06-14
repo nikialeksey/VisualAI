@@ -55,8 +55,7 @@ DnDObject {
 
     property bool leftPointVisible: true // активна ли левая кнопка для стрелочек
     property bool rightPointVisible: true // активна ли правая кнопка для стрелочек
-    property int maxLeftArrows: 1 // сколько стрелочек могут входить в левую кнопку
-    property int maxRightArrows: -1 // сколько стрелочек могут входить в правую кнопку (-1 - бесконечно много)
+    property int maxChildrenCount: -1 // сколько стрелочек могут входить в правую кнопку (-1 - бесконечно много)
 
     property real arrowButtonWidth: 10
     property real arrowButtonHeight: height
@@ -84,8 +83,7 @@ DnDObject {
                         canvas: toolObject.canvas,
                         leftPointVisible: toolObject.leftPointVisible,
                         rightPointVisible: toolObject.rightPointVisible,
-                        maxLeftArrows: toolObject.maxLeftArrows,
-                        maxRightArrows: toolObject.maxRightArrows,
+                        maxChildrenCount: toolObject.maxChildrenCount,
                         arrowButtonWidth: toolObject.arrowButtonWidth,
                         arrowButtonHeight: toolObject.arrowButtonHeight,
                     }
@@ -116,51 +114,61 @@ DnDObject {
         BezierCurve {
             curveWidth: 2
             color: 'black'
+
+            property var rightPoint // то, откуда выходит, то есть где старт
+            property var leftPoint // то, куда приходит, то есть где конец
         }
     }
 
     NormalArrowButton {
         id: leftPoint
-        realButtonWidth: toolObject.arrowButtonWidth
-        realButtonHeight: toolObject.arrowButtonHeight
+        realButtonWidth: parent.arrowButtonWidth
+        realButtonHeight: parent.arrowButtonHeight
         x: -width
-        y: toolObject.height / 2 - height / 2
+        y: parent.height / 2 - height / 2
         visible: false
 
+        property var parentArrow
+        property var arrow // текущая стрелочка (она в данный момент двигается вместе с мышкой)
+
         function getArrowEndX() {
-            return toolObject.x - toolObject.arrowButtonWidth / 2;
+            return parent.x - parent.arrowButtonWidth / 2;
         }
 
         function getArrowEndY() {
-            return toolObject.y + toolObject.height / 2;
+            return parent.y + parent.height / 2;
         }
 
         function addArrow(arrow) {
-            if (arrows.length == toolObject.maxLeftArrows) {
-                var i;
-                arrows[0].destroy();
-                for (i = 1; i < arrows.length; i++) {
-                    arrows[i - 1] = arrows[i];
+            if (parentArrow) {
+                var rightPoint = parentArrow.rightPoint;
+                if (rightPoint) {
+                    rightPoint.removeArrow(parentArrow);
                 }
-
-                arrows.pop();
+                parentArrow.destroy();
             }
+
             arrow.endX = Qt.binding(getArrowEndX);
             arrow.endY = Qt.binding(getArrowEndY);
+            arrow.leftPoint = leftPoint;
 
-            arrows.push(arrow);
+            parentArrow = arrow;
+        }
+
+        function removeArrow(arrow) {
+            parentArrow = null;
         }
 
         onVisibleChanged: {
             if (visible) {
-                width = toolObject.arrowButtonWidth;
-                height = toolObject.arrowButtonHeight;
+                width = parent.arrowButtonWidth;
+                height = parent.arrowButtonHeight;
             }
         }
 
         onDrawArrowBegin: {
             var incubator = bezierCurvePrototype.incubateObject(
-                toolObject.canvas,
+                parent.canvas,
                 {
                     'endArrow': true,
                 }
@@ -171,8 +179,8 @@ DnDObject {
                     arrow = incubator.object;
                     arrow.endX = Qt.binding(getArrowEndX);
                     arrow.endY = Qt.binding(getArrowEndY);
-                    arrow.startX = toolObject.x - toolObject.arrowButtonWidth + mouseX;
-                    arrow.startY = toolObject.y + mouseY;
+                    arrow.startX = parent.x - parent.arrowButtonWidth + mouseX;
+                    arrow.startY = parent.y + mouseY;
 
                     arrow.Drag.active = true;
                     arrow.Drag.keys = ['left', ];
@@ -198,8 +206,8 @@ DnDObject {
         }
 
         onDrawArrow: {
-            arrow.startX = toolObject.x - toolObject.arrowButtonWidth + mouseX;
-            arrow.startY = toolObject.y + mouseY;
+            arrow.startX = parent.x - parent.arrowButtonWidth + mouseX;
+            arrow.startY = parent.y + mouseY;
         }
 
         DropArea {
@@ -222,23 +230,30 @@ DnDObject {
 
     NormalArrowButton {
         id: rightPoint
-        realButtonWidth: toolObject.arrowButtonWidth
-        realButtonHeight: toolObject.arrowButtonHeight
-        x: toolObject.width
-        y: toolObject.height / 2 - height / 2
+        realButtonWidth: parent.arrowButtonWidth
+        realButtonHeight: parent.arrowButtonHeight
+        x: parent.width
+        y: parent.height / 2 - height / 2
         visible: false
 
+        property var arrows: [] // список всех стрелочек, торчащих из этой кнопки
+        property var arrow // текущая стрелочка (она в данный момент двигается вместе с мышкой)
+
         function getArrowStartX() {
-            return toolObject.x + toolObject.width + toolObject.arrowButtonWidth / 2;
+            return parent.x + parent.width + parent.arrowButtonWidth / 2;
         }
 
         function getArrowStartY() {
-            return toolObject.y + toolObject.height / 2;
+            return parent.y + parent.height / 2;
         }
 
         function addArrow(arrow) {
-            if (arrows.length == toolObject.maxRightArrows) {
+            if (arrows.length == parent.maxChildrenCount) {
                 var i;
+                var leftPoint = arrows[0].leftPoint;
+                if (leftPoint) {
+                    leftPoint.removeArrow(arrow[0]);
+                }
                 arrows[0].destroy();
                 for (i = 1; i < arrows.length; i++) {
                     arrows[i - 1] = arrows[i];
@@ -247,13 +262,21 @@ DnDObject {
             }
             arrow.startX = Qt.binding(getArrowStartX);
             arrow.startY = Qt.binding(getArrowStartY);
+            arrow.rightPoint = rightPoint;
 
             arrows.push(arrow);
         }
 
+        function removeArrow(arrow) {
+            var index = arrows.indexOf(arrow);
+            if (index >= 0) {
+                arrows.splice(index, 1);
+            }
+        }
+
         onDrawArrowBegin: {
             var incubator = bezierCurvePrototype.incubateObject(
-                toolObject.canvas,
+                parent.canvas,
                 {
                     'endArrow': true,
                 }
@@ -262,8 +285,8 @@ DnDObject {
             incubator.onStatusChanged = function (status) {
                 if (status === Component.Ready) {
                     arrow = incubator.object;
-                    arrow.endX = toolObject.x + toolObject.width + mouseX;
-                    arrow.endY = toolObject.y + mouseY;
+                    arrow.endX = parent.x + parent.width + mouseX;
+                    arrow.endY = parent.y + mouseY;
                     arrow.startX = Qt.binding(getArrowStartX);
                     arrow.startY = Qt.binding(getArrowStartY);
 
@@ -291,8 +314,8 @@ DnDObject {
         }
 
         onDrawArrow: {
-            arrow.endX = toolObject.x + toolObject.width + mouseX;
-            arrow.endY = toolObject.y + mouseY;
+            arrow.endX = parent.x + parent.width + mouseX;
+            arrow.endY = parent.y + mouseY;
         }
 
         DropArea {

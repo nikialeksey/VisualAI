@@ -80,6 +80,9 @@ class JsonGenerator(QQuickItem):
 
         s = (' ' * offset * 4) + self['_generate' + QQmlProperty.read(node, 'actualName')](node)
 
+        s += (' ' * (offset + 1) * 4) + "'x': " + str(node.x()) + ',\n'
+        s += (' ' * (offset + 1) * 4) + "'y': " + str(node.y()) + ',\n'
+
         s += (' ' * (offset + 1) * 4) + "'children': [\n"
         rightPoint = QQmlProperty.read(node, '_rightPoint')
         if rightPoint is not None:

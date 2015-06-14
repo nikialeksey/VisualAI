@@ -47,20 +47,32 @@ AbstractButton {
         NormalColorAnimation {}
     }
 
+    Behavior on opacity {
+        NormalNumberAnimation {}
+    }
+
+    Behavior on x {
+        NormalNumberAnimation {}
+    }
+
+    Behavior on y {
+        NormalNumberAnimation {}
+    }
+
     states: [
         State {
             name: ''
-            PropertyChanges {target: redXButton; color: normalColor}
+            PropertyChanges {target: redXButton; color: normalColor; opacity: 0}
         },
         State {
             name: 'pressed'
             when: isPressed
-            PropertyChanges {target: redXButton; color: pressedColor}
+            PropertyChanges {target: redXButton; color: pressedColor; opacity: 1}
         },
         State {
             name: 'hovered'
             when: isHovered
-            PropertyChanges {target: redXButton; color: hoveredColor}
+            PropertyChanges {target: redXButton; color: hoveredColor; opacity: 1}
         }
     ]
 }

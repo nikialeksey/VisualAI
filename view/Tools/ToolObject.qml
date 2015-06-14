@@ -255,6 +255,53 @@ DnDObject {
                 }
             }
         ]
+
+        onEntered: {
+            if (parentArrow) {
+                textX.visible = true;
+                color = '#80ff0000';
+                opacity = 1;
+            }
+        }
+
+        onExited: {
+            if (parentArrow) {
+                textX.visible = false;
+                opacity = 0.2;
+            }
+        }
+
+        onPressed: {
+            if (parentArrow) {
+                color = '#ffff0000';
+                opacity = 1;
+            }
+        }
+
+        onReleased: {
+            opacity = 0.2;
+        }
+
+        onClicked: {
+            if (parentArrow) {
+                if(parentArrow.rightPoint) {
+                    parentArrow.rightPoint.removeArrow(parentArrow);
+                }
+                parentArrow.destroy();
+                parentArrow = null;
+
+                textX.visible = false;
+            }
+        }
+
+        Text {
+            id: textX
+            text: 'X'
+            font.pointSize: 10
+            anchors.centerIn: parent
+            visible: false
+        }
+
     }
 
     NormalArrowButton {

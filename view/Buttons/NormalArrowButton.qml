@@ -34,6 +34,8 @@ ArrowButton {
     pressedColor: '#9240D5'
     hoveredColor: '#582781'
 
+    opacity: 0.2
+
     onEntered: {
         width *= 2;
         height *= 2;

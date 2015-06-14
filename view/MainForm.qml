@@ -128,11 +128,13 @@ Rectangle {
                         title: 'Decorators'
                         height: 100
                         width: toolsWidth - parent.spacing * 2
+                        property int realPositionY: actionsToolsContainer.realPositionY + actionsToolsContainer.height + parent.spacing
 
                         Inverter {
                             x: 10; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
-                            canvasDY: -actionsToolsContainer.realPositionY
+                            canvasDY: -decoratorsToolsContainer.realPositionY
+                            canvas: canvas
                         }
 
 

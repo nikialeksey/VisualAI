@@ -188,9 +188,8 @@ DnDObject {
                 addArrow(arrow);
 
                 var rightPoint = dropArea.parent;
-                var toolObject = rightPoint.parent;
-
                 rightPoint.addArrow(arrow);
+
                 arrow.Drag.active = false;
             } else {
                 arrow.destroy();

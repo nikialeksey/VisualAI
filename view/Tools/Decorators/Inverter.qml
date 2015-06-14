@@ -33,5 +33,6 @@ DecoratorObject {
     Text {
         text: 'Inv'
         font.pointSize: 18
+        anchors.centerIn: parent
     }
 }

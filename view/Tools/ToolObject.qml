@@ -26,6 +26,7 @@ import QtQuick 2.4
 import PyConsole 1.0
 import "../Base"
 import "../Buttons"
+import Curves 1.0
 
 DnDObject {
     PyConsole {
@@ -98,11 +99,21 @@ DnDObject {
     property real arrowButtonWidth: 10
     property real arrowButtonHeight: height
 
+    Component {
+        id: bezierCurvePrototype
+        BezierCurve {
+            curveWidth: 2
+            color: 'black'
+        }
+    }
+
     NormalArrowButton {
         id: leftPoint
         x: -width
         y: toolObject.height / 2 - height / 2
         visible: false
+
+        property var arrow
 
         onEntered: {
             width *= 2;
@@ -121,8 +132,31 @@ DnDObject {
             height = toolObject.arrowButtonHeight;
         }
 
-        onDrawArrow: {
+        onDrawArrowBegin: {
+            var incubator = bezierCurvePrototype.incubateObject(
+                toolObject.canvas,
+                {
+                    'endX': toolObject.x - toolObject.arrowButtonWidth / 2,
+                    'endY': toolObject.y + toolObject.height / 2,
+                }
+            );
 
+            incubator.onStatusChanged = function (status) {
+                if (status === Component.Ready) {
+                    arrow = incubator.object;
+                    arrow.startX = toolObject.x - toolObject.arrowButtonWidth + mouseX;
+                    arrow.startY = toolObject.y + mouseY;
+                }
+            };
+        }
+
+        onDrawArrowEnd: {
+            arrow = null;
+        }
+
+        onDrawArrow: {
+            arrow.startX = toolObject.x - toolObject.arrowButtonWidth + mouseX;
+            arrow.startY = toolObject.y + mouseY;
         }
     }
 
@@ -134,6 +168,8 @@ DnDObject {
         y: toolObject.height / 2 - height / 2
         visible: false
 
+        property var arrow
+
         onEntered: {
             width *= 2;
             height *= 2;
@@ -149,6 +185,33 @@ DnDObject {
         onExited: {
             width = toolObject.arrowButtonWidth;
             height = toolObject.arrowButtonHeight;
+        }
+
+        onDrawArrowBegin: {
+            var incubator = bezierCurvePrototype.incubateObject(
+                toolObject.canvas,
+                {
+                    'startX': toolObject.x + toolObject.width + toolObject.arrowButtonWidth / 2,
+                    'startY': toolObject.y + toolObject.height / 2,
+                }
+            );
+
+            incubator.onStatusChanged = function (status) {
+                if (status === Component.Ready) {
+                    arrow = incubator.object;
+                    arrow.endX = toolObject.x + toolObject.width + toolObject.arrowButtonWidth + mouseX;
+                    arrow.endY = toolObject.y + mouseY;
+                }
+            };
+        }
+
+        onDrawArrowEnd: {
+            arrow = null;
+        }
+
+        onDrawArrow: {
+            arrow.endX = toolObject.x + toolObject.width + toolObject.arrowButtonWidth + mouseX;
+            arrow.endY = toolObject.y + mouseY;
         }
     }
 }

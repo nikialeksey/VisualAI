@@ -78,21 +78,25 @@ Rectangle {
                         Selector {
                             x: 60; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
+                            canvas: canvas
                         }
 
                         Parallel {
                             x: 10; y: 75
                             canvasDX: toolsPanel.distanceToCanvasX
+                            canvas: canvas
                         }
 
                         MemSelector {
                             x: 60; y: 75
                             canvasDX: toolsPanel.distanceToCanvasX
+                            canvas: canvas
                         }
 
                         MemSequence {
                             x: 110; y: 75
                             canvasDX: toolsPanel.distanceToCanvasX
+                            canvas: canvas
                         }
                     }
 
@@ -107,12 +111,14 @@ Rectangle {
                             x: 10; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
                             canvasDY: -actionsToolsContainer.realPositionY
+                            canvas: canvas
                         }
 
                         Wait {
                             x: 60; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
                             canvasDY: -actionsToolsContainer.realPositionY
+                            canvas: canvas
                         }
                     }
 
@@ -171,23 +177,8 @@ Rectangle {
             z: -10
 
             Canvas {
-
                 id: canvas
                 anchors.fill: parent
-                onPaint: {
-                    var ctx = canvas.getContext('2d');
-                    ctx.strokeStyle = 'rgb(255, 100, 55, 1.0)';
-                    ctx.beginPath();
-                    ctx.moveTo(75,40);
-                    ctx.bezierCurveTo(75,37,70,25,50,25);
-                    ctx.bezierCurveTo(20,25,20,62.5,20,62.5);
-                    ctx.bezierCurveTo(20,80,40,102,75,120);
-                    ctx.bezierCurveTo(110,102,130,80,130,62.5);
-                    ctx.bezierCurveTo(130,62.5,130,25,100,25);
-                    ctx.bezierCurveTo(85,25,75,37,75,40);
-                    ctx.closePath();
-                    ctx.stroke();
-                }
             }
 
             DropArea {

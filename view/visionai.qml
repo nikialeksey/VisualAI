@@ -25,9 +25,9 @@ SOFTWARE.
 import QtQuick 2.4
 import Curves 1.0
 
-//MainForm {}
+MainForm {}
 
-Rectangle {
+/*Rectangle {
     width: 500
     height: 500
     BezierCurve {
@@ -39,5 +39,5 @@ Rectangle {
         startArrow: true
         endArrow: true
     }
-}
+}*/
 

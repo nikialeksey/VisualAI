@@ -168,10 +168,10 @@ Rectangle {
                         }
                     }
 
-                    NormalTextButton {
+                    /*NormalTextButton {
                         text: "Import JSON"
                         width: toolsWidth - 10
-                    }
+                    }*/
                 }
             }
         }

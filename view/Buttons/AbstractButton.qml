@@ -26,11 +26,11 @@ import QtQuick 2.4
 import "../Base"
 
 FormObject {
-    property bool isHovered: false
-    property bool isPressed: mouseArea.pressed
+    property bool isHovered: false // true, если мышь находится над элементом
+    property bool isPressed: mouseArea.pressed // true, если мышь была нажата, находясь над элементом
 
-    property real mouseX: mouseArea.mouseX
-    property real mouseY: mouseArea.mouseY
+    property real mouseX: mouseArea.mouseX // значение x-координаты курсора мыши относительно данного объекта
+    property real mouseY: mouseArea.mouseY // значение y-координаты курсора мыши относительно данного объекта
 
     signal clicked
     signal pressed

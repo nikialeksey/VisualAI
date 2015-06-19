@@ -31,7 +31,7 @@ AbstractButton {
     property string colorNormal
     property string colorPressed
     property string colorHovered
-    property string text
+    property string text // текст, написанный на кнопке
 
     color: colorNormal
 

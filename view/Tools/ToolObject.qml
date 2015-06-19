@@ -48,14 +48,14 @@ DnDObject {
 
     Drag.keys: ['tool', ]
 
-    property string actualName: 'toolObject'
+    property string actualName: 'toolObject' // имя элемента дерева поведения, используется при генерации дерева
 
-    property bool isDeletable: true
+    property bool isDeletable: true // true, если на объекте появляется кнопка для удаления
 
     property var _leftPoint: leftPoint
     property var _rightPoint: rightPoint
 
-    property bool isPrototype: true
+    property bool isPrototype: true // true, если объект находится на панеле инструментов
     property real canvasDX: 0
     property real canvasDY: 0
     property string arrowPointColor: '#A69F00'

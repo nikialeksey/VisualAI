@@ -37,9 +37,12 @@ AbstractButton {
     property string hoveredColor
     color: normalColor
 
-    signal drawArrow
-    signal drawArrowBegin
-    signal drawArrowEnd
+    signal drawArrow // Возбуждается при перемещении курсора мыши при условии, что он была нажата кнопка мыши
+                     // в поле объекта и не отжата
+    signal drawArrowBegin // Возбуждается при первом перемещении курсора мыши при условии, что была нажата кнопка мыши в
+                          // поле объекта и не отжата
+    signal drawArrowEnd // Возбуждается после отжатия кнопки мыши при условии, что был возбужден сигнал
+                        // drawArrowBegin ранее
 
 
     onPressed: {

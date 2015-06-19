@@ -27,7 +27,7 @@ import PyConsole 1.0
 import "../Base"
 
 FormObject {
-    property string title: "Title"
+    property string title: "Title" // название контейнера, расположено левом верхнем углу
     color: '#BFBA30'
 
     Text {

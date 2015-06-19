@@ -66,7 +66,7 @@ Rectangle {
                     ToolsContainer {
                         id: compositesToolsContainer
                         title: 'Composites'
-                        height: 150
+                        height: 130
                         width: toolsWidth - parent.spacing * 2
 
                         Sequence {
@@ -94,7 +94,7 @@ Rectangle {
                         }
 
                         MemSequence {
-                            x: 110; y: 75
+                            x: 110; y: 25
                             canvasDX: toolsPanel.distanceToCanvasX
                             canvas: canvas
                         }
@@ -125,7 +125,7 @@ Rectangle {
                     ToolsContainer {
                         id: decoratorsToolsContainer
                         title: 'Decorators'
-                        height: 100
+                        height: 130
                         width: toolsWidth - parent.spacing * 2
                         property int realPositionY: actionsToolsContainer.realPositionY + actionsToolsContainer.height + parent.spacing
 
@@ -136,6 +136,40 @@ Rectangle {
                             canvas: canvas
                         }
 
+                        AlwaysSuccess {
+                            x: 60; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -decoratorsToolsContainer.realPositionY
+                            canvas: canvas
+                        }
+
+                        AlwaysFail {
+                            x: 110; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -decoratorsToolsContainer.realPositionY
+                            canvas: canvas
+                        }
+
+                        UntilSuccess {
+                            x: 10; y: 75
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -decoratorsToolsContainer.realPositionY
+                            canvas: canvas
+                        }
+
+                        UntilFail {
+                            x: 60; y: 75
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -decoratorsToolsContainer.realPositionY
+                            canvas: canvas
+                        }
+
+                        Repeat {
+                            x: 110; y: 75
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -decoratorsToolsContainer.realPositionY
+                            canvas: canvas
+                        }
 
                     }
                 }

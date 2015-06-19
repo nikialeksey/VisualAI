@@ -32,8 +32,14 @@ CompositeObject {
         return Qt.createComponent('MemSelector.qml');
     }
 
-    Image {
+    /*Image {
         anchors.fill: parent
         source: "Icons/MemSelector.svg"
+    }*/
+
+    Text {
+        text: 'MSl'
+        font.pointSize: 16
+        anchors.centerIn: parent
     }
 }

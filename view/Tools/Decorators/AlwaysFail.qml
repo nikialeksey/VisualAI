@@ -25,21 +25,16 @@ SOFTWARE.
 import QtQuick 2.4
 import PyConsole 1.0
 
-CompositeObject {
-    actualName: 'MemSequence'
+DecoratorObject {
+    actualName: 'Always Fail'
 
     function createPrototypeComponent() {
-        return Qt.createComponent('MemSequence.qml');
+        return Qt.createComponent('AlwaysFail.qml');
     }
 
-    /*Image {
-        anchors.fill: parent
-        source: "Icons/MemSequence.svg"
-    }*/
-
     Text {
-        text: 'MSq'
-        font.pointSize: 16
+        text: 'Flr'
+        font.pointSize: 18
         anchors.centerIn: parent
     }
 }

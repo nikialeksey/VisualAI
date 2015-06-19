@@ -30,31 +30,31 @@ FormObject {
         id: pyconsole
     }
 
-    property bool isDragEnabled: true
+    property bool isDragEnabled: true // true, если манипулирование при помощи Drag-and-drop разрешено
 
-    property bool isDrag: false
-    property bool isHovered: false
+    property bool isDrag: false // true, если эелемнт перетаскивается мышью
+    property bool isHovered: false // true, если мышь находится над элементом
 
-    property real dragMinimumX: x
-    property real dragMaximumX: x
+    property real dragMinimumX: x // минимальное значение координаты x объекта
+    property real dragMaximumX: x // максимальное значение координаты x объекта
 
-    property real dragMinimumY: y
-    property real dragMaximumY: y
+    property real dragMinimumY: y // минимальное значение координаты y объекта
+    property real dragMaximumY: y // максимальное значение координаты y объекта
 
-    property real mouseX: mouseArea.mouseX
-    property real mouseY: mouseArea.mouseY
+    property real mouseX: mouseArea.mouseX // значение x-координаты курсора мыши относительно данного объекта
+    property real mouseY: mouseArea.mouseY // значение y-координаты курсора мыши относительно данного объекта
 
     Drag.active: mouseArea.drag.active
     Drag.hotSpot.x: width/2
     Drag.hotSpot.y: height/2
 
-    signal dragBegin
-    signal dragEnd
-    signal clicked
-    signal pressed
-    signal released
-    signal entered
-    signal exited
+    signal dragBegin // возбуждается на начало манипулирования при помощи Drag-and-drop
+    signal dragEnd // возбуждается после окончания манипулирования при помощи Drag-and-drop
+    signal clicked // возбуждается после клика мышью на объект
+    signal pressed // возбуждается при нажатии мышью на объект
+    signal released // возбуждается после отжатия мыши на объекте
+    signal entered // возбуждается при входе курсора мыши в поле объекта
+    signal exited // возбуждается при выходе курсора мыши за поле объекта
 
     onChildrenChanged: {
         /*if (children.length === 2) {

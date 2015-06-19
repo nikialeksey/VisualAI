@@ -120,6 +120,13 @@ Rectangle {
                             canvasDY: -actionsToolsContainer.realPositionY
                             canvas: canvas
                         }
+
+                        Condition {
+                            x: 110; y: 25
+                            canvasDX: toolsPanel.distanceToCanvasX
+                            canvasDY: -actionsToolsContainer.realPositionY
+                            canvas: canvas
+                        }
                     }
 
                     ToolsContainer {
